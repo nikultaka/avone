@@ -30,6 +30,7 @@ Route::group([
     Route::get('user-profile', 'App\Http\Controllers\AuthController@userProfile');
 });
 
+Route::get('authenticate', 'App\Http\Controllers\AuthController@notauthenticate')->name('authenticate');
 Route::get('articles', 'App\Http\Controllers\ArticleController@index');
 Route::get('articles/{article}', 'App\Http\Controllers\ArticleController@show');
 Route::post('articles', 'App\Http\Controllers\ArticleController@store');

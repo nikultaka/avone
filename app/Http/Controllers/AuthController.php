@@ -9,14 +9,18 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-
+  
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register','notauthenticate']]);
+    }
+
+    public function notauthenticate() {
+        return response()->json(array('status'=>401,'msg'=>'Authentication failed'), 401);
     }
 
     /**
