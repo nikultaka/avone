@@ -37,5 +37,5 @@ Route::post('articles', 'App\Http\Controllers\ArticleController@store');
 Route::put('articles/{article}', 'App\Http\Controllers\ArticleController@update');
 Route::delete('articles/{article}', 'App\Http\Controllers\ArticleController@delete');
 
-Route::get('deployment', 'App\Http\Controllers\DeploymentController@index');
+Route::post('deployment/{action}', 'App\Http\Controllers\DeploymentController@index');
 Route::post('create-deployment', 'App\Http\Controllers\DeploymentController@store');
