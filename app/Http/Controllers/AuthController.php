@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Deployment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use DB;
 
 class AuthController extends Controller
 {
@@ -29,6 +31,15 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request){ 
+        /*$books = DB::collection('users')->get();
+        echo '<pre>'; print_r($books); exit;
+        DB::table('users')->insert(array('email'=>'chisdsdsd@gmail.com'));*/    
+
+        // $deployment = new Deployment;
+        // $deployment->email= "tako@gmail.com";
+        // $deployment->save();
+        // die;
+
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -60,6 +71,7 @@ class AuthController extends Controller
         if($validator->fails()){
              return response()->json($validator->errors(), 400);
         }
+
 
         $user = User::create(array_merge(
                     $validator->validated(),
