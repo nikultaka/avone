@@ -1,0 +1,51 @@
+$(document).ready(function () {
+    // $('form[id="login_form"]').validate({
+    //     rules: {
+    //       email: 'required',
+    //       password: {
+    //         required: true,
+    //         minlength: 6,
+    //       }
+    //     },
+    //     messages: {
+    //       email: 'This field is required',
+    //       password: {
+    //         required:'Password is required',
+    //         minlength: 'Password must be at least 6 characters long'
+    //       }
+    //     },
+    //     submitHandler: function(form) {
+    //       showloader();
+    //         $.ajax({
+    //             url: BASE_URL + '/api/auth/login',
+    //             type: 'post',
+    //             data: $('#login_form').serialize(),
+    //             success: function (responce) {
+    //                 var data = JSON.parse(JSON.stringify(responce))
+    //                 if (data.status != 401 && data.status != 422) {
+    //                     $('#email').val('');
+    //                     $('#password').val('');                
+    //                     // Store
+    //                     // sessionStorage.setItem('access_token',data.access_token);    
+    //                     document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard?access_token="+data.access_token+"";
+    //                   hideloader();
+    //                 } else if (data.status == 422) {
+    //                      printErrorMsg(data.error)
+    //                      hideloader();
+    //                 }  else if(data.status == 401){
+    //                     errorMsg(data.error)
+    //                     hideloader();
+    //                 }
+    //             }
+    //         });
+    //     }
+    //   });
+});
+
+function printErrorMsg(msg) {
+  $(".print-error-msg").find("ul").html('');
+  $(".print-error-msg").css('display', 'block');
+  $.each(msg, function (key, value) {
+  $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+  });
+}

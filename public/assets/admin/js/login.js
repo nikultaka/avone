@@ -15,6 +15,7 @@ $(document).ready(function () {
           }
         },
         submitHandler: function(form) {
+          showloader();
             $.ajax({
                 url: BASE_URL + '/api/auth/login',
                 type: 'post',
@@ -22,18 +23,29 @@ $(document).ready(function () {
                 success: function (responce) {
                     var data = JSON.parse(JSON.stringify(responce))
                     if (data.status != 401 && data.status != 422) {
-                        successMsg('Login Successfully')
                         $('#email').val('');
                         $('#password').val('');                
-                        document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
+                        // Store
+                        // sessionStorage.setItem('access_token',data.access_token);    
+                        document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard?access_token="+data.access_token+"";
+                      hideloader();
                     } else if (data.status == 422) {
-                        // printErrorMsg(data.error)
-                        errorMsg(data.error)
+                         printErrorMsg(data.error)
+                         hideloader();
                     }  else if(data.status == 401){
                         errorMsg(data.error)
+                        hideloader();
                     }
                 }
             });
         }
       });
 });
+
+function printErrorMsg(msg) {
+  $(".print-error-msg").find("ul").html('');
+  $(".print-error-msg").css('display', 'block');
+  $.each(msg, function (key, value) {
+  $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
+  });
+}

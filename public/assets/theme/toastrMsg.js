@@ -28,3 +28,11 @@ function infoMsg(msg)
     toastr.info(msg);
 }
 
+function showloader() {
+    $("#loader").css("display", "block !important;");
+    $("#loader").show();
+}
+function hideloader() {
+    $("#loader").css("display", "none;");
+    $("#loader").hide();
+}

@@ -24,9 +24,11 @@ Route::group([
 ], function ($router) {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('register', 'App\Http\Controllers\AuthController@register');
+    // Route::get('checkemail', 'App\Http\Controllers\AuthController@checkemail');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
     Route::get('user-profile', 'App\Http\Controllers\AuthController@userProfile');
+
 });
 
 Route::get('authenticate', 'App\Http\Controllers\AuthController@notauthenticate')->name('authenticate');

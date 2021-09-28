@@ -46,13 +46,12 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status'=> 422,'error' => $validator->errors()], 422);
-            // return response()->json(['status'=> 422,'error' => $validator->errors()], 422);
-
+            return response()->json(['status'=> 422,'error' => $validator->errors()]);
+            // return response()->json($validator->errors(), 422);
         }
 
         if (! $token = auth()->attempt($validator->validated())) {
-            // return response()->json(['status'=> 0,'error' => 'Either email or password is wrong.'], 401);
+            // return response()->json(['error' => 'Either email or password is wrong.'], 401);
             return response()->json(['status'=> 401,'error' => 'Either email or password is wrong.']);
         }
 
@@ -68,12 +67,26 @@ class AuthController extends Controller
         
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
+            'email' => 'required|string|email|max:100|unique:admin',
             'password' => 'required|string|min:6',
         ]);
 
+        // if($validator->fails()){
+        //      return response()->json($validator->errors(), 400);
+        // }
+
+        // $user = User::create(array_merge(
+        //             $validator->validated(),
+        //             ['password' => bcrypt($request->password)]
+        //         ));
+
+        // return response()->json([
+        //     'message' => 'User successfully registered',
+        //     'user' => $user
+        // ], 201);
+
         if($validator->fails()){
-             return response()->json($validator->errors(), 400);
+             return response()->json(['status'=> 400,'error' => $validator->errors()]);
         }
 
         $user = User::create(array_merge(
@@ -82,10 +95,20 @@ class AuthController extends Controller
                 ));
 
         return response()->json([
-            'message' => 'User successfully registered',
+            'status' => 201,
+            'msg' => 'User successfully registered',
             'user' => $user
-        ], 201);
+        ]);
     }
+
+    public function emailcheck(Request $request){
+	    $checkemail = [];
+		if (count($checkemail) > 0) {
+			echo json_encode(FALSE);
+		} else {
+			echo json_encode(true);
+		}
+	}
 
 
     /**

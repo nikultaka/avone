@@ -9,6 +9,9 @@
         <div class="card">
             <div class="card-body register-card-body">
                 <p class="login-box-msg">Register a new membership</p>
+                <div class="alert alert-danger print-error-msg" style="display:none;">
+                    <ul></ul>
+                </div>
                 <form onsubmit="return false" method="post" id="register_form" name="register_form">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Full name">
