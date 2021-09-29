@@ -6,7 +6,7 @@ $(document).ready(function () {
           email: {
             required: true,
             email: true,
-            remote: BASE_URL + '/api/auth/checkemail',
+            remote: API_PREFIX + '/api/auth/checkemail',
           },
           password: {
             required: true,
@@ -37,7 +37,7 @@ $(document).ready(function () {
         },
         submitHandler: function(form) {
             $.ajax({
-                url: BASE_URL + '/api/auth/register',
+                url: API_PREFIX + '/api/auth/register',
                 type: 'post',
                 data: $('#register_form').serialize(),
                 success: function (responce) { 

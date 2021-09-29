@@ -8,10 +8,11 @@ use Session;
 class DashboardController extends Controller
 {
     public function index(Request $request){
-        $tokan = $_GET['access_token'];
-        if($tokan !=''){
+        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : '';
+        
+        if($token !=''){
             // $user_id = auth()->user($tokan);
-            return view('Admin/dashboard')->with(compact('tokan'));
+            return view('Admin/dashboard')->with(compact('token'));
         }else{
             return view('Admin/layouts/login/login');
         }

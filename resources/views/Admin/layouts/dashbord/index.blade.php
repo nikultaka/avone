@@ -32,6 +32,8 @@
 
     <!--  Custom Top JavaScript   -->
     <link rel="stylesheet" href="{{ asset('assets/cdn_css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/style.css') }}">
+
 
     <script src="{{ asset('assets/cdn_js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/cdn_js/dataTables.bootstrap4.min.js') }}"></script>
@@ -40,6 +42,16 @@
     <script type="text/javascript"> 
         var BASE_URL = "{{ url('/') }}"; 
         var ADMIN = 'admin';
+        var ELASTIC_VERSION = '7.14.2';
+        var ELASTIC_REGION = 'azure-eastus2';
+        // var API_LOCAL = 'http://127.0.0.1:8000';
+        var mode = 'local';
+        if(mode == 'local'){
+          var API_PREFIX = 'http://127.0.0.1:8001';
+        }
+        if(mode == 'live'){
+          var API_PREFIX = 'http://127.0.0.1:8000';
+        }
     </script>
     
     @yield('headersection')
@@ -50,8 +62,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <!-- loader Start -->
-    <div id="loading"></div>
-
+    <div id="loader" class="loader" style="display: none"></div>
     <!-- Wrapper Start -->
     {{-- <div class="wrapper"> --}}
         @include('Admin.layouts.dashbord.navbar')

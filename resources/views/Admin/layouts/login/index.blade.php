@@ -27,6 +27,13 @@
   <script type="text/javascript"> 
     var BASE_URL = "{{ url('/') }}"; 
     var ADMIN = 'admin';
+    var mode = 'local';
+        if(mode == 'local'){
+          var API_PREFIX = 'http://127.0.0.1:8001';
+        }
+        if(mode == 'live'){
+          var API_PREFIX = 'http://127.0.0.1:8000';
+        }
 </script>
 </head>
 <body class="hold-transition login-page">

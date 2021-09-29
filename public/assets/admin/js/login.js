@@ -17,7 +17,7 @@ $(document).ready(function () {
         submitHandler: function(form) {
           showloader();
             $.ajax({
-                url: BASE_URL + '/api/auth/login',
+                url: API_PREFIX + '/api/auth/login',
                 type: 'post',
                 data: $('#login_form').serialize(),
                 success: function (responce) {
@@ -25,9 +25,14 @@ $(document).ready(function () {
                     if (data.status != 401 && data.status != 422) {
                         $('#email').val('');
                         $('#password').val('');                
-                        // Store
-                        // sessionStorage.setItem('access_token',data.access_token);    
-                        document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard?access_token="+data.access_token+"";
+                          // Store
+                          // sessionStorage.setItem('access_token',data.access_token);
+                          // sessionStorage.setItem('user_id',data.user.id);    
+                          // sessionStorage.setItem('user_name',data.user.name);    
+                          // sessionStorage.setItem('user_email',data.user.email);    
+                          // document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
+                          document.cookie = "access_token="+data.access_token+"";
+                        document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
                       hideloader();
                     } else if (data.status == 422) {
                          printErrorMsg(data.error)
