@@ -26,14 +26,11 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     {{-- toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-    
     <!-- End Theme Top JavaScript / CSS  -->
 
     <!--  Custom Top JavaScript   -->
     <link rel="stylesheet" href="{{ asset('assets/cdn_css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/style.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/style.css') }}">
 
     <script src="{{ asset('assets/cdn_js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/cdn_js/dataTables.bootstrap4.min.js') }}"></script>
@@ -44,7 +41,6 @@
         var ADMIN = 'admin';
         var ELASTIC_VERSION = '7.14.2';
         var ELASTIC_REGION = 'azure-eastus2';
-        // var API_LOCAL = 'http://127.0.0.1:8000';
         var mode = 'local';
         if(mode == 'local'){
           var API_PREFIX = 'http://127.0.0.1:8001';
@@ -107,8 +103,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/additional-methods.js"></script>
     {{-- toastr --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="{{ asset('assets/theme/toastrMsg.js') }}"></script>
-
+    <script src="{{ asset('assets/admin/js/common.js') }}"></script>
     @yield('footersection')
 </div>
 </body>

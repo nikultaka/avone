@@ -25,13 +25,16 @@ $(document).ready(function () {
                     if (data.status != 401 && data.status != 422) {
                         $('#email').val('');
                         $('#password').val('');                
-                          // Store
-                          // sessionStorage.setItem('access_token',data.access_token);
-                          // sessionStorage.setItem('user_id',data.user.id);    
-                          // sessionStorage.setItem('user_name',data.user.name);    
-                          // sessionStorage.setItem('user_email',data.user.email);    
-                          // document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
-                          document.cookie = "access_token="+data.access_token+"";
+                          // Store token
+                          var now = new Date();
+                          var expire = new Date();
+                              expire.setFullYear(now.getFullYear());
+                              expire.setMonth(now.getMonth());
+                              expire.setDate(now.getDate()+1);
+                              expire.setHours(0);
+                              expire.setMinutes(0);
+                          document.cookie = "access_token="+data.access_token+";expires="+expire.toString()+"";
+                          
                         document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
                       hideloader();
                     } else if (data.status == 422) {

@@ -49,7 +49,7 @@
  <script src="{{ asset('assets/theme/admin/js/adminlte.js') }}"></script>
     {{-- toastr --}}
  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
- <script src="{{ asset('assets/theme/toastrMsg.js') }}"></script>
+ <script src="{{ asset('assets/admin/js/common.js') }}"></script>
  @yield('footersection')
 </body>
 </html>

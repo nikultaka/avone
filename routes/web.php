@@ -26,8 +26,11 @@ Route::group(['prefix' => 'admin'], function() {
     
     // after login
     Route::get('/dashboard','App\Http\Controllers\Admin\DashboardController@index')->name('admin-dashboard');
+
+    // deployment
     Route::get('/deployment','App\Http\Controllers\Admin\DeploymentController@index')->name('admin-deployment');
     Route::get('/deployment/dataTable','App\Http\Controllers\Admin\DeploymentController@deploymentDataTable')->name('admin-deployment-datatable');
+    Route::post('/deployment/edit','App\Http\Controllers\Admin\DeploymentController@deploymentEdit')->name('admin-deployment-edit');
 
 });
 

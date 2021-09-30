@@ -11,6 +11,7 @@
               </div>
              <div class="modal-body">
                  <form id="addNewDeploymentForm" name="addNewDeploymentForm" onsubmit="return false">
+                    <input type="hidden" id="deploymentHdnID" name="deploymentHdnID" value="">
                     <h3><b>Name</b></h3>
                     <div class="form-group">
                         <input type="text" class="form-control" id="deploymentName" name="deploymentName" placeholder="My Deployment">
@@ -27,9 +28,9 @@
                                 <label for="sizePerZone">Size per zone</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" id="sizePerZoneElastic">
-                                    <option disabled value="4096">45 GB storage  | 1 GB RAM | Up to 2.5 vCPU</option>
-                                    <option disabled value="4096">90 GB storage  | 2 GB RAM | Up to 2.5 vCPU</option>
+                                <select class="form-control" id="sizePerZoneElastic" name="sizePerZoneElastic">
+                                    <option disabled value="4094">45 GB storage  | 1 GB RAM | Up to 2.5 vCPU</option>
+                                    <option disabled value="4095">90 GB storage  | 2 GB RAM | Up to 2.5 vCPU</option>
                                     <option selected value="4096">180 GB storage | 4 GB RAM | Up to 2.5 vCPU</option>
                                   </select>
                             </div>
@@ -60,19 +61,19 @@
                       <hr>
                 {{-- --------------------------------------------------------------------------------------- --}}
                     <h3><b>Kibana</b></h3>
-                    <b>Kibana nodes:</b>                    </b>
+                    <b>Kibana nodes:</b>
                     <p>Visualize data and interact with the Elastic Stack.</p>
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-2">
-                                <label for="sizePerZoneKibana">Size per zone</label>
+                                <label for="Size per zone Kibana">Size per zone</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" id="sizePerZoneKibana">
-                                    <option selected value="1024">1 GB storage    |     Up to 8 vCPU</option>
-                                    <option disabled value="1024">2 GB storage    |     Up to 8 vCPU</option>
-                                    <option disabled value="1024">4 GB storage   |     Up to 8 vCPU</option>
+                                <select class="form-control" id="sizePerZoneKibana" name="sizePerZoneKibana">
+                                    <option selected value="1022">1 GB storage    |     Up to 8 vCPU</option>
+                                    <option disabled value="1023">2 GB storage    |     Up to 8 vCPU</option>
+                                    <option disabled value="1024">4 GB storage    |     Up to 8 vCPU</option>
                                   </select>
                             </div>
                         </div>
@@ -108,12 +109,12 @@
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-2">
-                                <label for="sizePerZoneApm">Size per zone</label>
+                                <label for="Size per zone Apm">Size per zone</label>
                             </div>
                             <div class="col-sm-9">
-                                <select class="form-control" id="sizePerZoneApm">
-                                    <option selected value="1024">1 GB storage    |     Up to 8 vCPU</option>
-                                    <option disabled value="1024">2 GB storage    |     Up to 8 vCPU</option>
+                                <select class="form-control" id="sizePerZoneApm" name="sizePerZoneApm">
+                                    <option selected value="1022">1 GB storage    |     Up to 8 vCPU</option>
+                                    <option disabled value="1023">2 GB storage    |     Up to 8 vCPU</option>
                                     <option disabled value="1024">4 GB storage    |     Up to 8 vCPU</option>
                                   </select>
                             </div>

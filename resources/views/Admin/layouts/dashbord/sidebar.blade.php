@@ -1,3 +1,4 @@
+<?php  $routeName = Request::route()->getName(); ?>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
    <!-- Brand Logo -->
@@ -34,21 +35,16 @@
      <nav class="mt-2">
        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-         <li class="nav-item menu-open">
-           <a href="#" class="nav-link active">
+         <li class="nav-item">
+           <a href="{{ route('admin-dashboard') }}" class="nav-link <?php echo $routeName == 'admin-dashboard' ? 'active':'';?>">
              <i class="nav-icon fas fa-tachometer-alt"></i>
-             <p>
-               Dashboard
-               <i class="right fas fa-angle-left"></i>
-             </p>
+             <p>Dashboard</p>
            </a>
          </li>
          <li class="nav-item">
-            <a href="{{ route('admin-deployment') }}" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Deployment
-              </p>
+            <a href="{{ route('admin-deployment') }}" class="nav-link <?php echo $routeName == 'admin-deployment' ? 'active':'';?>">
+              <i class="nav-icon fas fa-cloud-upload-alt"></i>
+              <p>Deployment</p>
             </a>
           </li>
          <li class="nav-item">
