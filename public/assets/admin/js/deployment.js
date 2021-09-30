@@ -31,7 +31,7 @@ $(document).ready(function () {
     if (error == 0) {
       showloader();
       if(deploymentHdnID == ''){    
-        
+
         var settings = {
           "url": API_PREFIX + "/api/deployment/create",
           "method": "POST",
@@ -335,6 +335,8 @@ $(document).on('click', '.editDeployment', function () {
         var data = JSON.parse(response);
         if (data.status == 1) {
           var result = data.deploymentsEditData;
+          // console.log(result.resources.elasticsearch[0].info.plan_info.current.plan.cluster_topology)
+          // return false;
           var cluster_topology = result.resources.elasticsearch[0].info.plan_info.current.plan.cluster_topology;
           var elasticsearch = '';
               cluster_topology.forEach(function(index) {

@@ -71,9 +71,9 @@
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" id="sizePerZoneKibana" name="sizePerZoneKibana">
-                                    <option selected value="1022">1 GB storage    |     Up to 8 vCPU</option>
+                                    <option selected value="1024">1 GB storage    |     Up to 8 vCPU</option>
                                     <option disabled value="1023">2 GB storage    |     Up to 8 vCPU</option>
-                                    <option disabled value="1024">4 GB storage    |     Up to 8 vCPU</option>
+                                    <option disabled value="1022">4 GB storage    |     Up to 8 vCPU</option>
                                   </select>
                             </div>
                         </div>
@@ -113,9 +113,9 @@
                             </div>
                             <div class="col-sm-9">
                                 <select class="form-control" id="sizePerZoneApm" name="sizePerZoneApm">
-                                    <option selected value="1022">1 GB storage    |     Up to 8 vCPU</option>
+                                    <option selected value="1024">1 GB storage    |     Up to 8 vCPU</option>
                                     <option disabled value="1023">2 GB storage    |     Up to 8 vCPU</option>
-                                    <option disabled value="1024">4 GB storage    |     Up to 8 vCPU</option>
+                                    <option disabled value="1022">4 GB storage    |     Up to 8 vCPU</option>
                                   </select>
                             </div>
                         </div>
