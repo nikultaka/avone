@@ -135,16 +135,17 @@ $(document).ready(function () {
         });
       }else{
         var settings = {
-          "url": API_PREFIX + "/api/deployment/update",
+          "url": API_PREFIX+"/api/deployment/update",
           "method": "POST",
           "timeout": 0,
           "headers": {
-            "Authorization": "Bearer " + access_token + "",
+            "Authorization": "Bearer "+access_token+"",
             "Content-Type": "application/json",
-            "deploymentID":deploymentHdnID,
+            "deploymentID": deploymentHdnID
           },
           "data": JSON.stringify({
             "name": deploymentName,
+            "prune_orphans": false,
             "resources": {
               "elasticsearch": [
                 {
@@ -222,21 +223,16 @@ $(document).ready(function () {
             }
           }),
         };
-
+        
         $.ajax(settings).done(function (response) {
           hideloader();
-  
-          if (response != '' && response != null) {
-            if (response.id != '' && response.id != null) {
-              successMsg("Deployments created successfully")
-              $('#deploymentModal').modal('hide');
-              deploymentDataTable();
+            if (response != '' && response != null) {
+                successMsg("Deployments updated successfully")
+                $('#deploymentModal').modal('hide');
+                deploymentDataTable();
             } else {
               errorMsg("Something went wrong please try again")
             }
-          } else {
-            errorMsg("Something went wrong please try again")
-          }
         });
       }
 
@@ -335,8 +331,6 @@ $(document).on('click', '.editDeployment', function () {
         var data = JSON.parse(response);
         if (data.status == 1) {
           var result = data.deploymentsEditData;
-          // console.log(result.resources.elasticsearch[0].info.plan_info.current.plan.cluster_topology)
-          // return false;
           var cluster_topology = result.resources.elasticsearch[0].info.plan_info.current.plan.cluster_topology;
           var elasticsearch = '';
               cluster_topology.forEach(function(index) {
