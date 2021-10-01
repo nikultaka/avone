@@ -24,11 +24,14 @@ class User extends Authenticatable implements JWTSubject
     protected $connection = 'mongodb';
     protected $collection = 'users';
     protected $fillable = [
+        '_id',
         'name',
         'email',
         'password',
+        'is_admin',
+        'status'
     ];
-
+    
     /**
      * The attributes that should be hidden for arrays.
      *

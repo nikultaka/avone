@@ -47,10 +47,16 @@
               <p>Deployment</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('admin-manage-users') }}" class="nav-link <?php echo $routeName == 'admin-manage-users' ? 'active':'';?>">
+               <i class="nav-icon fa fa-users"></i>
+               <p>Manage Users</p>
+             </a>
+           </li>
          <li class="nav-item">
-           <a href="#" class="nav-link">
-             <i class="nav-icon far fa-circle text-info"></i>
-             <p>Informational</p>
+          <a href="{{ route('admin-setting') }}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
+             <i class="nav-icon fas fa-cogs"></i>
+             <p>Settings</p>
            </a>
          </li>
        </ul>

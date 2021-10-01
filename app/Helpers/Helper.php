@@ -17,7 +17,7 @@ if (!function_exists('curlCall')) {
               CURLOPT_SSL_VERIFYHOST => 0,
               CURLOPT_SSL_VERIFYPEER => 0,
               CURLOPT_HTTPHEADER => array(
-                'Authorization: ApiKey '.env("EC_API_KEY"),
+                'Authorization: ApiKey '.config('app.EC_API_KEY'),
                 'Content-Type: application/json'
             ),
         ));
@@ -28,6 +28,17 @@ if (!function_exists('curlCall')) {
         //     die;
         curl_close($curl);
         return json_decode($response);
+    }
+}
+
+if (!function_exists('settingData')) {
+    function settingData() {
+        $settingData = DB::table('settings')->first();    
+        if(!empty($settingData) && $settingData != '' ){    
+            return $settingData;
+        } else {
+            return false;
+        }
     }
 }
 

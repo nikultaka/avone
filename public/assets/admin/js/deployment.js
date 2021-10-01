@@ -251,23 +251,50 @@ function printErrorMsg(msg) {
 
 function deploymentDataTable() {
   var urlbase = API_PREFIX;
-  showloader();
-  $.ajax({
-    url: BASE_URL + '/' + ADMIN + '/deployment/dataTable',
-    type: 'get',
-    data: {
-      "_token": $("[name='_token']").val(),
-      "urlbase": urlbase,
-    },
-    success: function (response) {
-      var data = JSON.parse(response);
-      if (data.status == 1) {
-        $('.ajaxResponse').html(data.table);
-        hideloader();
-      }
-      hideloader();
-    }
-  });
+    $('#deploymentDataTable').dataTable({
+            "paging": false,
+            "pageLength": 10,
+            "bProcessing": true,
+            "serverSide": true,
+            "bDestroy": true,
+            "ajax": {
+                type: "get",
+                url: BASE_URL + '/' + ADMIN + '/deployment/dataTable',
+                data: {
+                      "_token": $("[name='_token']").val(),
+                       "urlbase": urlbase,
+                    },
+            },
+            "aoColumns": [
+                { mData: 'id' },
+                { mData: 'name' },
+                { mData: 'action' },
+            ],
+            "order": [[0, "asc"]],
+            "columnDefs": [{
+                "targets": [2],
+                "orderable": false
+            }]
+        });
+  //   $('#deploymentDataTable').DataTable({
+  //     processing: true,
+  //     serverSide: true,
+  //     "bDestroy": true,     
+  //     "bAutoWidth": false,
+  //     "ajax": {
+  //         type: 'get',
+  //         url: BASE_URL + '/' + ADMIN + '/deployment/dataTable',
+  //         data: {
+  //             "_token": $("[name='_token']").val(),
+  //             "urlbase": urlbase,
+  //         },
+  //     },
+  //     columns: [
+  //         {data: 'id', name: 'id'},
+  //         {data: 'name', name: 'name'},
+  //         {data: 'action', name: 'action', orderable: false, searchable: false},
+  //     ]
+  // });
 }
 
 $(document).on('click', '.deleteDeployment', function () {

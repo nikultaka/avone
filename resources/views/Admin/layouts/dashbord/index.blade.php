@@ -31,16 +31,23 @@
     <!--  Custom Top JavaScript   -->
     <link rel="stylesheet" href="{{ asset('assets/cdn_css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/style.css') }}">
-
+    @php
+        $settingData = settingData();
+        $settingVersion = isset($settingData['version']) ? $settingData['version'] : '';
+        $settingEcApiKey = isset($settingData['ecapikey']) ? $settingData['ecapikey'] : '';
+        config(['app.EC_API_KEY' => $settingEcApiKey]);
+        config(['app.EC_VERSION' => $settingVersion]);
+        $version = config('app.EC_VERSION');
+    @endphp
     <script src="{{ asset('assets/cdn_js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/cdn_js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     <script type="text/javascript"> 
         var BASE_URL = "{{ url('/') }}"; 
         var ADMIN = 'admin';
-        var ELASTIC_VERSION = '7.14.2';
-        var ELASTIC_REGION = 'azure-eastus2';
+        var ELASTIC_REGION = 'azure-eastus2'; 
         var mode = 'local';
         if(mode == 'local'){
           var API_PREFIX = 'http://127.0.0.1:8001';
@@ -48,11 +55,11 @@
         if(mode == 'live'){
           var API_PREFIX = 'http://127.0.0.1:8000';
         }
+        var ELASTIC_VERSION = '<?php echo $version; ?>';
     </script>
     
     @yield('headersection')
     <!--  End Custom Top JavaScript   -->
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
