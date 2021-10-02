@@ -105,7 +105,7 @@ class ManageUsersController extends Controller
                             return $status;
                     })
                     ->addColumn('is_admin', function($row){   
-                        $rowAdmin = isset($row->status) ? $row->status : '';
+                        $rowAdmin = isset($row->is_admin) ? $row->is_admin : '';
                         $is_admin = "User";
                         if($rowAdmin == 1){
                             $is_admin = "Admin";
