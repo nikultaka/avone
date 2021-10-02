@@ -15,7 +15,7 @@
          <img src="{{asset('assets/theme/admin/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
        </div>
        <div class="info">
-         <a href="#" class="d-block">Alexander Pierce</a>
+         <a href="{{ route('admin-dashboard') }}" class="d-block">{{$logInUserData['userName']}}</a>
        </div>
      </div>
 
@@ -47,12 +47,16 @@
               <p>Deployment</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ route('admin-manage-users') }}" class="nav-link <?php echo $routeName == 'admin-manage-users' ? 'active':'';?>">
-               <i class="nav-icon fa fa-users"></i>
-               <p>Manage Users</p>
-             </a>
-           </li>
+          <?php
+            if($logInUserData['is_admin'] == 1){ ?>
+                  <li class="nav-item">
+                    <a href="{{ route('admin-manage-users') }}" class="nav-link <?php echo $routeName == 'admin-manage-users' ? 'active':'';?>">
+                       <i class="nav-icon fa fa-users"></i>
+                       <p>Manage Users</p>
+                     </a>
+                   </li>
+           <?php }
+          ?>          
          <li class="nav-item">
           <a href="{{ route('admin-setting') }}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
              <i class="nav-icon fas fa-cogs"></i>

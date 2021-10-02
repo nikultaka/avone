@@ -33,10 +33,15 @@ $(document).ready(function () {
                               expire.setDate(now.getDate()+1);
                               expire.setHours(0);
                               expire.setMinutes(0);
-                          document.cookie = "access_token="+data.access_token+";expires="+expire.toString()+"";
-                          
-                        document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
-                      hideloader();
+                              if(data.user.status == 1){
+                                document.cookie = "access_token="+data.access_token+";expires="+expire.toString()+"";
+                                document.cookie = "userName="+data.user.name+";expires="+expire.toString()+"";
+                                document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";
+                                document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
+                              }else{
+                                errorMsg("Your account not active");        
+                              }
+                        hideloader();
                     } else if (data.status == 422) {
                          printErrorMsg(data.error)
                          hideloader();
@@ -57,3 +62,5 @@ function printErrorMsg(msg) {
   $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
   });
 }
+
+

@@ -32,6 +32,14 @@
                        <input type="text" class="form-control" id="version" name="version"  placeholder="Enter version" value="{{isset($settingData['version']) ? $settingData['version'] : ''}}">
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label for="region">Region :</label>
+                    </div>
+                    <div class="col-sm-10">
+                       <input type="text" class="form-control" id="region" name="region"  placeholder="Enter Region" value="{{isset($settingData['ec_region']) ? $settingData['ec_region'] : ''}}">
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-success float-right">Save Settings</button>
             </form>    
         </div><!-- /.card-body -->

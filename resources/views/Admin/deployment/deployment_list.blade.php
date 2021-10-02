@@ -9,6 +9,12 @@
 
 @section('admincontent')
 @include('Admin.deployment.deployment_modal')
+<style>
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+max-width: 400px !important;
+}
+</style>
+
     <div class="card card-primary card-outline">
         @csrf
         <div class="card-header">
@@ -22,7 +28,12 @@
                         <tr>
                             <th>#Id</th>
                             <th>Name</th>
-                            <th style="min-width: 200px">Action</th>
+                            <?php 
+                                if(userIsSuperAdmin()){ ?>
+                                        <th style="max-width: 100px; !important">Cloud ID</th>
+                                <?php }
+                            ?>
+                            <th style="min-width: 250px">Action</th>
                         </tr>
                     </thead>
                     <tbody class="ajaxResponse">

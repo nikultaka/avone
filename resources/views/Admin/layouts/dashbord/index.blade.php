@@ -1,3 +1,8 @@
+@php
+namespace App\Helpers; 
+$logInUserData = logInUserData();
+@endphp
+
 <!doctype html>
 <html lang="en">
 
@@ -35,9 +40,13 @@
         $settingData = settingData();
         $settingVersion = isset($settingData['version']) ? $settingData['version'] : '';
         $settingEcApiKey = isset($settingData['ecapikey']) ? $settingData['ecapikey'] : '';
+        $settingEcRegion = isset($settingData['ec_region']) ? $settingData['ec_region'] : '';
         config(['app.EC_API_KEY' => $settingEcApiKey]);
         config(['app.EC_VERSION' => $settingVersion]);
+        config(['app.EC_REGION' => $settingEcRegion]);
         $version = config('app.EC_VERSION');
+        $region = config('app.EC_REGION');
+        $userIsSuperAdmin = userIsSuperAdmin();
     @endphp
     <script src="{{ asset('assets/cdn_js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/cdn_js/dataTables.bootstrap4.min.js') }}"></script>
@@ -47,7 +56,6 @@
     <script type="text/javascript"> 
         var BASE_URL = "{{ url('/') }}"; 
         var ADMIN = 'admin';
-        var ELASTIC_REGION = 'azure-eastus2'; 
         var mode = 'local';
         if(mode == 'local'){
           var API_PREFIX = 'http://127.0.0.1:8001';
@@ -55,7 +63,9 @@
         if(mode == 'live'){
           var API_PREFIX = 'http://127.0.0.1:8000';
         }
+        var ELASTIC_REGION = '<?php echo $region; ?>'; 
         var ELASTIC_VERSION = '<?php echo $version; ?>';
+        var userIsSuperAdmin = '<?php echo $userIsSuperAdmin; ?>';
     </script>
     
     @yield('headersection')
@@ -111,6 +121,7 @@
     {{-- toastr --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ asset('assets/admin/js/common.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/admin/js/logout.js') }}"></script>
     @yield('footersection')
 </div>
 </body>

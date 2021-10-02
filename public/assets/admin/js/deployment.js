@@ -1,6 +1,6 @@
 $(document).ready(function () {
   deploymentDataTable();
-  $('#deploymentDataTable').DataTable();
+  // $('#deploymentDataTable').DataTable();
   $('#addNewDeployment').on('click', function () {
     $('#deploymentModal').modal('show');
   });
@@ -251,50 +251,48 @@ function printErrorMsg(msg) {
 
 function deploymentDataTable() {
   var urlbase = API_PREFIX;
-    $('#deploymentDataTable').dataTable({
-            "paging": false,
-            "pageLength": 10,
-            "bProcessing": true,
-            "serverSide": true,
-            "bDestroy": true,
+  if(userIsSuperAdmin == 1){
+          $('#deploymentDataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            "bDestroy": true,     
+            "bAutoWidth": false,
             "ajax": {
-                type: "get",
+                type: 'get',
                 url: BASE_URL + '/' + ADMIN + '/deployment/dataTable',
                 data: {
-                      "_token": $("[name='_token']").val(),
-                       "urlbase": urlbase,
-                    },
+                    "_token": $("[name='_token']").val(),
+                    "urlbase": urlbase,
+                },
             },
-            "aoColumns": [
-                { mData: 'id' },
-                { mData: 'name' },
-                { mData: 'action' },
-            ],
-            "order": [[0, "asc"]],
-            "columnDefs": [{
-                "targets": [2],
-                "orderable": false
-            }]
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'cloud_id', name: 'cloud_id' , 'width': '400px'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
         });
-  //   $('#deploymentDataTable').DataTable({
-  //     processing: true,
-  //     serverSide: true,
-  //     "bDestroy": true,     
-  //     "bAutoWidth": false,
-  //     "ajax": {
-  //         type: 'get',
-  //         url: BASE_URL + '/' + ADMIN + '/deployment/dataTable',
-  //         data: {
-  //             "_token": $("[name='_token']").val(),
-  //             "urlbase": urlbase,
-  //         },
-  //     },
-  //     columns: [
-  //         {data: 'id', name: 'id'},
-  //         {data: 'name', name: 'name'},
-  //         {data: 'action', name: 'action', orderable: false, searchable: false},
-  //     ]
-  // });
+  }else{
+          $('#deploymentDataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            "bDestroy": true,     
+            "bAutoWidth": false,
+            "ajax": {
+                type: 'get',
+                url: BASE_URL + '/' + ADMIN + '/deployment/dataTable',
+                data: {
+                    "_token": $("[name='_token']").val(),
+                    "urlbase": urlbase,
+                },
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'name', name: 'name'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+  }
 }
 
 $(document).on('click', '.deleteDeployment', function () {
@@ -317,7 +315,7 @@ $(document).on('click', '.deleteDeployment', function () {
                 "timeout": 0,
                 "headers": {
                   "Authorization": "Bearer " + access_token + "",
-                  "deploymentID": deploymentID
+                  "deploymentID": deploymentID,
                 },
               };
               $.ajax(settings).done(function (response) {

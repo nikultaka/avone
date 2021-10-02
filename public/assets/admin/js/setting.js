@@ -2,11 +2,13 @@ $(document).ready(function () {
     $('form[id="settingForm"]').validate({
         rules: {
           ecApiKey: 'required',
-          version: 'required'
+          version: 'required',
+          region: 'required',
         },
         messages: {
           ecApiKey: 'This field is required',
           version: 'This field is required',
+          region: 'This field is required',
         },
         submitHandler: function(form) {
           showloader();

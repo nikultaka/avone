@@ -12,6 +12,15 @@ class LoginController extends Controller
         return view('Admin/layouts/login/login');
     }
 
+    public  function logout(Request $request){
+        setcookie("userName", "", time() - 3600);
+        setcookie("access_token", "", time() - 3600);
+        setcookie("is_admin", "", time() - 3600);
+        
+        $response['status'] = 1;
+        echo json_encode($response);
+        exit;
+    }
     // public function loginProccess(Request $request)
     // {
     //     $email = $request->email;

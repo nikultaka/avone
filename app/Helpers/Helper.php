@@ -31,6 +31,8 @@ if (!function_exists('curlCall')) {
     }
 }
 
+
+// _________________________________________________________Auth Function______________________________________________________________
 if (!function_exists('settingData')) {
     function settingData() {
         $settingData = DB::table('settings')->first();    
@@ -42,6 +44,27 @@ if (!function_exists('settingData')) {
     }
 }
 
+if (!function_exists('logInUserData')) {
+  function logInUserData() {
+      $userData['is_admin'] = isset($_COOKIE['is_admin']) ? $_COOKIE['is_admin'] : '';
+      $userData['userName'] = isset($_COOKIE['userName']) ? $_COOKIE['userName'] : '';
+      if(!empty($userData) && $userData != '' ){    
+          return $userData;
+      } else {
+          return false;
+      }
+  }
+}
+if (!function_exists('userIsSuperAdmin')) {
+    function userIsSuperAdmin() {
+        $is_admin = isset($_COOKIE['is_admin']) ? $_COOKIE['is_admin'] : '';
+        if($is_admin == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
 if (!function_exists('userLoggedIn')) {
     function userLoggedIn() {
         $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : '';    
@@ -65,6 +88,10 @@ if (!function_exists('getAccessToken')) {
         }
     }
 }
+// _________________________________________________________Auth Function End______________________________________________________________
+
+
+// _________________________________________________________API Function __________________________________________________________________
 
 if (!function_exists('deploymentListApiCall')) {
      function deploymentListApiCall($API_PREFIX,$token){
@@ -117,3 +144,5 @@ if (!function_exists('deploymentViewApiCall')) {
         return json_decode($response);
    }
 }
+
+// _________________________________________________________API Function End_____________________________________________________________________

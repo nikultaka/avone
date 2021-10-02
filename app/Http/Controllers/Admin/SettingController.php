@@ -44,6 +44,7 @@ class SettingController extends Controller
         } 
         $settingDataDB->ecapikey = $settingData['ecApiKey'];
         $settingDataDB->version = $settingData['version'];
+        $settingDataDB->ec_region = $settingData['region'];
         if($isCreate == 1) {
             $settingDataDB->created_at = Carbon::now()->timestamp;
             $settingDataDB->save();

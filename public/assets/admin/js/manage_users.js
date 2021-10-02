@@ -19,15 +19,15 @@ $(document).ready(function () {
           userEmail: {
             required: true,
             email: true,
-            remote:{
-              url: BASE_URL + '/' + ADMIN + '/user/email/exist/ornot',
-              type: "get",
-              data: { 
-                userHdnID: function(){
-                      return $('#userHdnID').val();
-                  }
-              },
-            }
+            // remote:{
+            //   url: BASE_URL + '/' + ADMIN + '/user/email/exist/ornot',
+            //   type: "get",
+            //   data: { 
+            //     userHdnID: function(){
+            //           return $('#userHdnID').val();
+            //       }
+            //   },
+            // }
           },
           password: {
             required: true,
@@ -41,7 +41,7 @@ $(document).ready(function () {
           userEmail: {
             required:'Password is required',
             email: 'Enter valid email',
-            remote:'That email address is already exist.'
+            // remote:'That email address is already exist.'
           },
           password: {
             required:'Password is required',
@@ -67,6 +67,7 @@ $(document).ready(function () {
                       $('#userModal').modal('hide');
                       successMsg(data.msg)
                       hideloader();
+                      userDataTable();
                     } else if  (data.status == 0) {
                          printErrorMsg(data.msg)
                          hideloader();
