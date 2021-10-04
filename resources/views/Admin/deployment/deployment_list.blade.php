@@ -9,6 +9,7 @@
 
 @section('admincontent')
 @include('Admin.deployment.deployment_modal')
+@include('Admin.deployment.deployment_view_data_modal')
 <style>
 table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
 max-width: 400px !important;
@@ -26,13 +27,15 @@ max-width: 400px !important;
                 <table class="table table-striped table-bordered" id="deploymentDataTable">
                     <thead>
                         <tr>
-                            <th>#Id</th>
+                            {{-- <th>#Id</th> --}}
                             <th>Name</th>
                             <?php 
                                 if(userIsSuperAdmin()){ ?>
-                                        <th style="max-width: 100px; !important">Cloud ID</th>
+                                        <th>Cloud ID</th>
                                 <?php }
                             ?>
+                            <th>Status</th>
+                            <th>Kibana Link</th>
                             <th style="min-width: 250px">Action</th>
                         </tr>
                     </thead>

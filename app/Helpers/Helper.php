@@ -31,6 +31,100 @@ if (!function_exists('curlCall')) {
     }
 }
 
+// _________________________________________________________ Deployment list api call function______________________________________________________________
+
+if (!function_exists('deploymentListArrayHelper')) {
+    function deploymentListArrayHelper(){
+        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : '';    
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'http://127.0.0.1:8001/api/deployment/list',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$token.''
+          ),
+        ));
+        
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $deploymentsDataArray = array();
+        
+        if($response != '' && $response != null && !empty($response)){
+            $json_decode_response = json_decode($response)->deployments;
+        }
+        if(!empty($json_decode_response) && $json_decode_response != '' && $json_decode_response != null){
+                $deploymentsIdAndNameArray = array();            
+                foreach($json_decode_response as $key => $deploymentList){
+                    $deploymentsIdAndNameArray[] =  array('id' => $deploymentList->id, 'name' => $deploymentList->name);
+                }
+            
+                if(count($deploymentsIdAndNameArray) > 0){
+                    foreach($deploymentsIdAndNameArray as $deploymentsIdAndNameKey => $deploymentsIdAndName){
+                        $deploymentsId = $deploymentsIdAndName['id'];
+                            $curl = curl_init();
+                            curl_setopt_array($curl, array(
+                                CURLOPT_URL => 'http://127.0.0.1:8001/api/deployment/view',
+                                CURLOPT_RETURNTRANSFER => true,
+                                CURLOPT_ENCODING => '',
+                                CURLOPT_MAXREDIRS => 10,
+                                CURLOPT_TIMEOUT => 0,
+                                CURLOPT_FOLLOWLOCATION => true,
+                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                CURLOPT_CUSTOMREQUEST => 'POST',
+                                CURLOPT_HTTPHEADER => array(
+                                    'Authorization: Bearer '.$token.'',
+                                    'deploymentID: '.$deploymentsId.''
+                                ),
+                            ));
+                            $responseViewApi = curl_exec($curl);
+                            curl_close($curl);
+                            $json_decode_response_view = json_decode($responseViewApi);
+                                                
+                            if($json_decode_response_view->healthy != '' && $json_decode_response_view->healthy != ''){
+                                    $planElasticSearchArray = $json_decode_response_view->resources->elasticsearch[0]->info->plan_info->current->plan->cluster_topology;
+                                    $currentPlanElasticSearch = '';
+                                        foreach($planElasticSearchArray as $planElasticSearch){
+                                            if($planElasticSearch->size->value != 0){
+                                                $currentPlanElasticSearch = $planElasticSearch;
+                                            }
+                                        }
+                                    $currentPlanElasticSearchSize = $currentPlanElasticSearch->size->value;
+                                    $currentPlanElasticSearchZone = $currentPlanElasticSearch->zone_count;
+                                        
+                                    $plankibanaSize = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
+                                    $plankibanaZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
+                                    $kibanaAliasedUrl = $json_decode_response_view->resources->kibana[0]->info->metadata->aliased_url;
+        
+                                    $planApmSize = $json_decode_response_view->resources->apm[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
+                                    $planApmZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
+                            }
+                       
+
+                            $deploymentsDataArray[$deploymentsId] =  array('id' => $deploymentsId, 
+                                                                          'name' => $deploymentsIdAndName['name'],
+                                                                          'status' => isset($json_decode_response_view->healthy) ? $json_decode_response_view->healthy : '',
+                                                                          'elasticSearchSize' => isset($currentPlanElasticSearchSize) ? $currentPlanElasticSearchSize : '',
+                                                                          'elasticSearchZone' => isset($currentPlanElasticSearchZone) ? $currentPlanElasticSearchZone : '',
+                                                                          'kibanaSize' => isset($plankibanaSize) ? $plankibanaSize : '',
+                                                                          'kibanaZone' => isset($plankibanaZone) ? $plankibanaZone : '',
+                                                                          'kibanaAliasedUrl' => isset($kibanaAliasedUrl) ? $kibanaAliasedUrl : '',
+                                                                          'apmSize' => isset($planApmSize) ? $planApmSize : '',
+                                                                          'apmZone' => isset($planApmZone) ? $planApmZone : '',                                                                        
+                                                                        );                            
+                    }   
+                }
+        }       
+        return $deploymentsDataArray;
+    }
+}
+// _________________________________________________________Deployment list api call function End__________________________________________________________
 
 // _________________________________________________________Auth Function______________________________________________________________
 if (!function_exists('settingData')) {
@@ -144,5 +238,6 @@ if (!function_exists('deploymentViewApiCall')) {
         return json_decode($response);
    }
 }
+
 
 // _________________________________________________________API Function End_____________________________________________________________________

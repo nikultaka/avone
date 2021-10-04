@@ -63,6 +63,12 @@
              <p>Settings</p>
            </a>
          </li>
+         <li class="nav-item">
+          <a href="{{route('admin-logout')}}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
+             <i class="nav-icon fas fa-sign-out-alt"></i>
+             <p>Sign Out</p>
+           </a>
+         </li>
        </ul>
      </nav>
      <!-- /.sidebar-menu -->

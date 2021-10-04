@@ -25,6 +25,7 @@ $logInUserData = logInUserData();
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/fontawesome-free/css/all.min.css') }}">
       <!-- Ionicons -->

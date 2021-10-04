@@ -240,7 +240,22 @@ $(document).ready(function () {
 
   });
 });
-
+setInterval(function(){
+    $.ajax({
+         url: BASE_URL + '/' + ADMIN + '/change/status/info',
+         type: 'post',
+         data: {
+            "_token": $("[name='_token']").val(),
+          },
+         success: function (responce){
+          var data = JSON.parse(responce);
+          $('#lastStatusHdn').val(data.lastStatus);
+          if (data.status == 1) {
+            infoMsg(data.deploymentName+' Status Now '+deploymentStatus)
+          }
+         }
+    });
+   }, 10000);
 function printErrorMsg(msg) {
   $(".print-error-msg").find("ul").html('');
   $(".print-error-msg").css('display', 'block');
@@ -266,9 +281,11 @@ function deploymentDataTable() {
                 },
             },
             columns: [
-                {data: 'id', name: 'id'},
+                // {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
-                {data: 'cloud_id', name: 'cloud_id' , 'width': '400px'},
+                {data: 'cloud_id', name: 'cloud_id'},
+                {data: 'deploymentStatus', name: 'deploymentStatus'},
+                {data: 'kibanaLink', name: 'kibanaLink'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -287,8 +304,9 @@ function deploymentDataTable() {
                 },
             },
             columns: [
-                {data: 'id', name: 'id'},
+                // {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
+                {data: 'kibanaLink', name: 'kibanaLink'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -379,10 +397,58 @@ $(document).on('click', '.editDeployment', function () {
           var availabilityZonesApm = result.resources.apm[0].info.plan_info.current.plan.cluster_topology[0].zone_count;
           $('#'+availabilityZonesApm+'zoneApm')[0].checked = true;
           $('select[name="sizePerZoneApm"]').val(sizePerZoneApm).trigger("change");
-
           hideloader();
         }
         hideloader();
       }
     });
-})
+});
+
+$(document).on('click', '.viewDeployment', function () {
+  var deploymentID = $(this).data("id");
+  showloader();
+  $.ajax({
+    url: BASE_URL + '/' + ADMIN + '/deployment/edit',
+    type: 'post',
+    data: {
+      "_token": $("[name='_token']").val(),
+      "urlbase": API_PREFIX,
+      "deploymentID":deploymentID,
+    },
+    success: function (response) {
+      var data = JSON.parse(response);
+      if (data.status == 1) {
+        var result = data.deploymentsEditData;
+        if(result.healthy == 1){
+          var cluster_id_elasticsearch = result.resources.elasticsearch[0].info.cluster_id;
+          var cluster_name_elasticsearch = result.resources.elasticsearch[0].info.cluster_name;
+          var status_elasticsearch = result.resources.elasticsearch[0].info.status;
+
+          var cluster_id_kibana = result.resources.kibana[0].info.cluster_id;
+          var cluster_name_kibana = result.resources.kibana[0].info.cluster_name;
+          var status_kibana = result.resources.kibana[0].info.status;
+
+          var cluster_id_apm = result.resources.apm[0].info.id;
+          var cluster_name_apm = result.resources.apm[0].info.name;
+          var status_apm = result.resources.apm[0].info.status;
+        }
+        $('#clusterIdElasticSearch').html((cluster_id_elasticsearch) ? cluster_id_elasticsearch : '');
+        $('#clusterNameElasticSearch').html((cluster_name_elasticsearch) ? cluster_name_elasticsearch : '');
+        $('#statusElasticSearch').html((status_elasticsearch) ? status_elasticsearch : '');
+
+        $('#clusterIdKibana').html((cluster_id_kibana) ? cluster_id_kibana : '');
+        $('#clusterNameKibana').html((cluster_name_kibana) ? cluster_name_kibana : '');
+        $('#statusKibana').html((status_kibana) ? status_kibana : '');
+
+        $('#clusterIdApn').html((cluster_id_apm) ? cluster_id_apm : '');
+        $('#clusterNameApn').html((cluster_name_apm) ? cluster_name_apm : '');
+        $('#statusApn').html((status_apm) ? status_apm : '');
+        hideloader();
+        $('#deploymentDataModal').modal('show');
+      }
+      hideloader();
+    }
+  });
+  
+
+});
