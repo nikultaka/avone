@@ -247,15 +247,17 @@ setInterval(function(){
          data: {
             "_token": $("[name='_token']").val(),
           },
-         success: function (responce){
-          var data = JSON.parse(responce);
-          $('#lastStatusHdn').val(data.lastStatus);
-          if (data.status == 1) {
-            infoMsg(data.deploymentName+' Status Now '+deploymentStatus)
+         success: function (response){
+          var data = JSON.parse(response);
+          if (data.lastStatusChange == 1) {
+            var changedDeploymentArray =  data.changedDeployment;
+            changedDeploymentArray.forEach(function(changedDeploymentData) {
+              infoMsg(changedDeploymentData.name+' Status Now '+ changedDeploymentData.status)    
+            });
           }
          }
     });
-   }, 10000);
+   }, 30000);
 function printErrorMsg(msg) {
   $(".print-error-msg").find("ul").html('');
   $(".print-error-msg").css('display', 'block');
@@ -432,17 +434,17 @@ $(document).on('click', '.viewDeployment', function () {
           var cluster_name_apm = result.resources.apm[0].info.name;
           var status_apm = result.resources.apm[0].info.status;
         }
-        $('#clusterIdElasticSearch').html((cluster_id_elasticsearch) ? cluster_id_elasticsearch : '');
-        $('#clusterNameElasticSearch').html((cluster_name_elasticsearch) ? cluster_name_elasticsearch : '');
-        $('#statusElasticSearch').html((status_elasticsearch) ? status_elasticsearch : '');
+        $('#clusterIdElasticSearch').html((cluster_id_elasticsearch) ? cluster_id_elasticsearch : 'Deployment status is pending now');
+        $('#clusterNameElasticSearch').html((cluster_name_elasticsearch) ? cluster_name_elasticsearch : '-');
+        $('#statusElasticSearch').html((status_elasticsearch) ? status_elasticsearch : '-');
 
-        $('#clusterIdKibana').html((cluster_id_kibana) ? cluster_id_kibana : '');
-        $('#clusterNameKibana').html((cluster_name_kibana) ? cluster_name_kibana : '');
-        $('#statusKibana').html((status_kibana) ? status_kibana : '');
+        $('#clusterIdKibana').html((cluster_id_kibana) ? cluster_id_kibana : 'Deployment status is pending now');
+        $('#clusterNameKibana').html((cluster_name_kibana) ? cluster_name_kibana : '-');
+        $('#statusKibana').html((status_kibana) ? status_kibana : '-');
 
-        $('#clusterIdApn').html((cluster_id_apm) ? cluster_id_apm : '');
-        $('#clusterNameApn').html((cluster_name_apm) ? cluster_name_apm : '');
-        $('#statusApn').html((status_apm) ? status_apm : '');
+        $('#clusterIdApn').html((cluster_id_apm) ? cluster_id_apm : 'Deployment status is pending now');
+        $('#clusterNameApn').html((cluster_name_apm) ? cluster_name_apm : '-');
+        $('#statusApn').html((status_apm) ? status_apm : '-');
         hideloader();
         $('#deploymentDataModal').modal('show');
       }

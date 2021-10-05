@@ -18,6 +18,7 @@ max-width: 400px !important;
 
     <div class="card card-primary card-outline">
         @csrf
+        <input type="hidden" id="numberOfAjax" name="numberOfAjax" value="">
         <div class="card-header">
             <h3 class="card-title">Deployment List</h3>
             <button class="btn btn-info float-right" id="addNewDeployment">Add New Deployment</button>
