@@ -64,14 +64,14 @@ class DeploymentController extends Controller
                     })
                    ->addColumn('kibanaLink', function($row) use ($deploymentListArrayHelper) {  
                             $kibanaAliasedUrl = $deploymentListArrayHelper[$row->id];
-                            $kibanaLink = '<a href="'.$kibanaAliasedUrl['kibanaAliasedUrl'].'" target="_blank">'.$kibanaAliasedUrl['kibanaAliasedUrl'].'</a>';
+                            $kibanaLink = '<a href="'.$kibanaAliasedUrl['kibanaAliasedUrl'].'" style="margin-left: 50px;" target="_blank" data-toggle="tooltip" title="Open Link"><i class="text-center fas fa-external-link-alt"></i></a>';
                             return $kibanaLink;
                     })
                     ->addColumn('action', function($row){
-                        $action = "<input type='button' value='Edit' class='btn btn-info editDeployment' data-id='".$row->id."'>&nbsp";
-                        $action .= "<input type='button' value='Delete' class='btn btn-danger deleteDeployment' data-id='".$row->id."'>&nbsp";     
+                        $action = "<input type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info editDeployment' data-id='".$row->id."'>&nbsp";
+                        $action .= "<input type='button' value='Delete' data-toggle='tooltip' title='Delete Deployment' class='btn btn-danger deleteDeployment' data-id='".$row->id."'>&nbsp";     
                         if(userIsSuperAdmin()){
-                            $action .= "<input type='button' value='View' class='btn btn-success viewDeployment' data-id='".$row->id."'>";     
+                            $action .= "<input type='button' value='View' class='btn btn-success data-toggle='tooltip' title='View Deployment Data' viewDeployment' data-id='".$row->id."'>";     
                         }
                         return $action;
                     })
