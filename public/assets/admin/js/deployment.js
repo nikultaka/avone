@@ -252,7 +252,12 @@ setInterval(function(){
           if (data.lastStatusChange == 1) {
             var changedDeploymentArray =  data.changedDeployment;
             changedDeploymentArray.forEach(function(changedDeploymentData) {
-              infoMsg(changedDeploymentData.name+' Status Now '+ changedDeploymentData.status)    
+              var statusString = 'Pending';
+              if(changedDeploymentData.status) {
+                statusString = 'Healthy';
+              }
+              infoMsg(changedDeploymentData.name+' Status is : '+ statusString);
+              deploymentDataTable();    
             });
           }
          }
