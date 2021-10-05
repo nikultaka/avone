@@ -18,8 +18,9 @@ class LoginController extends Controller
         setcookie("is_admin", "", time() - 3600);
         
         $response['status'] = 1;
-        echo json_encode($response);
-        exit;
+        //echo json_encode($response);
+        //exit;
+        return view('Admin/layouts/login/login');
     }
     // public function loginProccess(Request $request)
     // {
