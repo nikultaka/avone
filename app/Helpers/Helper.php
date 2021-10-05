@@ -31,6 +31,22 @@ if (!function_exists('curlCall')) {
     }
 }
 
+function deploymentWithNewKeyOddHelper($array=''){
+    
+    return $array;
+}
+function recursive_change_key($arr, $set) {
+    if (is_array($arr) && is_array($set)) {
+        $newArr = array();
+        foreach ($arr as $k => $v) {
+            $key = array_key_exists( $k, $set) ? $set[$k] : $k;
+            $newArr[$key] = is_array($v) ? recursive_change_key($v, $set) : $v;
+        }
+        return $newArr;
+    }
+    return $arr;    
+}
+
 // _________________________________________________________ Deployment list api call function______________________________________________________________
 
 if (!function_exists('deploymentListArrayHelper')) {
@@ -85,8 +101,8 @@ if (!function_exists('deploymentListArrayHelper')) {
                             ));
                             $responseViewApi = curl_exec($curl);
                             curl_close($curl);
-                            $json_decode_response_view = json_decode($responseViewApi);
-                                                
+                            $json_decode_response_view = json_decode($responseViewApi);                               
+                            
                             if($json_decode_response_view->healthy != '' && $json_decode_response_view->healthy != ''){
                                     $planElasticSearchArray = $json_decode_response_view->resources->elasticsearch[0]->info->plan_info->current->plan->cluster_topology;
                                     $currentPlanElasticSearch = '';
@@ -97,26 +113,37 @@ if (!function_exists('deploymentListArrayHelper')) {
                                         }
                                     $currentPlanElasticSearchSize = $currentPlanElasticSearch->size->value;
                                     $currentPlanElasticSearchZone = $currentPlanElasticSearch->zone_count;
-                                        
-                                    $plankibanaSize = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
-                                    $plankibanaZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
-                                    $kibanaAliasedUrl = $json_decode_response_view->resources->kibana[0]->info->metadata->aliased_url;
-        
-                                    $planApmSize = $json_decode_response_view->resources->apm[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
-                                    $planApmZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
+                                       
+                                
+                                    if($json_decode_response_view->resources->kibana[0]->info->status != ''){
+                                        $plankibanaSize = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
+                                        $plankibanaZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
+                                        $kibanaAliasedUrl = $json_decode_response_view->resources->kibana[0]->info->metadata->aliased_url;
+                                    }
+
+                                    if($json_decode_response_view->resources->apm[0]->info->status != ''){
+                                        $planApmSize = $json_decode_response_view->resources->apm[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
+                                        $planApmZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
+                                    }
+                                    
                             }
                        
+                            if($json_decode_response_view->healthy != ''){
+                                $status = $json_decode_response_view->healthy;
+                            }else{
+                                $status = 0;
+                            }
 
                             $deploymentsDataArray[$deploymentsId] =  array('id' => $deploymentsId, 
                                                                           'name' => $deploymentsIdAndName['name'],
-                                                                          'status' => isset($json_decode_response_view->healthy) ? $json_decode_response_view->healthy : '',
-                                                                          'elasticSearchSize' => isset($currentPlanElasticSearchSize) ? $currentPlanElasticSearchSize : '',
-                                                                          'elasticSearchZone' => isset($currentPlanElasticSearchZone) ? $currentPlanElasticSearchZone : '',
-                                                                          'kibanaSize' => isset($plankibanaSize) ? $plankibanaSize : '',
-                                                                          'kibanaZone' => isset($plankibanaZone) ? $plankibanaZone : '',
-                                                                          'kibanaAliasedUrl' => isset($kibanaAliasedUrl) ? $kibanaAliasedUrl : '',
-                                                                          'apmSize' => isset($planApmSize) ? $planApmSize : '',
-                                                                          'apmZone' => isset($planApmZone) ? $planApmZone : '',                                                                        
+                                                                          'status' => $status,
+                                                                          'elasticSearchSize' => isset($currentPlanElasticSearchSize) ? $currentPlanElasticSearchSize : 'Deployment status is pending now',
+                                                                          'elasticSearchZone' => isset($currentPlanElasticSearchZone) ? $currentPlanElasticSearchZone : 'Deployment status is pending now',
+                                                                          'kibanaSize' => isset($plankibanaSize) ? $plankibanaSize : 'Deployment status is pending now',
+                                                                          'kibanaZone' => isset($plankibanaZone) ? $plankibanaZone : 'Deployment status is pending now',
+                                                                          'kibanaAliasedUrl' => isset($kibanaAliasedUrl) ? $kibanaAliasedUrl : 'Deployment status is pending now',
+                                                                          'apmSize' => isset($planApmSize) ? $planApmSize : 'Deployment status is pending now',
+                                                                          'apmZone' => isset($planApmZone) ? $planApmZone : 'Deployment status is pending now',                                                                        
                                                                         );                            
                     }   
                 }
