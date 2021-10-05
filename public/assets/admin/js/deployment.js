@@ -313,7 +313,7 @@ function deploymentDataTable() {
             columns: [
                 // {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
-                {data: 'kibanaLink', name: 'kibanaLink'},
+                {data: 'deploymentStatus', name: 'deploymentStatus'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });

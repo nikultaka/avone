@@ -105,7 +105,7 @@ function printErrorMsg(msg) {
             },
         },
         columns: [
-            {data: '_id', name: '_id'},
+            // {data: '_id', name: '_id'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'is_admin', name: 'is_admin'},

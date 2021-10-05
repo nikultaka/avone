@@ -20,7 +20,7 @@
                     @csrf
                     <thead>
                         <tr>
-                            <th>#Id</th>
+                            {{-- <th>#Id</th> --}}
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role</th>
