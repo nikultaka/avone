@@ -73,7 +73,8 @@ if (!function_exists('deploymentListArrayHelper')) {
         $deploymentsDataArray = array();
         
         if($response != '' && $response != null && !empty($response)){
-            $json_decode_response = json_decode($response)->deployments;
+            $json_decode = json_decode($response);
+            $json_decode_response = $json_decode->deployments;
         }
         if(!empty($json_decode_response) && $json_decode_response != '' && $json_decode_response != null){
                 $deploymentsIdAndNameArray = array();            

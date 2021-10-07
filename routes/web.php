@@ -21,10 +21,15 @@ Route::get('/','App\Http\Controllers\Admin\LoginController@index');
 Route::group(['prefix' => 'admin'], function() {
     // $logInUserData = logInUserData();
     Route::get('/','App\Http\Controllers\Admin\LoginController@index');
-    Route::get('/login','App\Http\Controllers\Admin\LoginController@index')->name('admin-login');
     Route::get('/logout','App\Http\Controllers\Admin\LoginController@logout')->name('admin-logout');
+    // login
+    Route::get('/login','App\Http\Controllers\Admin\LoginController@index')->name('admin-login');
     Route::post('/proccess/login','App\Http\Controllers\Admin\LoginController@loginProccess')->name('admin-login-proccess');
+    // register
     Route::get('/register','App\Http\Controllers\Admin\RegisterController@index')->name('admin-register');
+    Route::get('/active/user/account/{id}','App\Http\Controllers\Admin\RegisterController@activeUserAccount')->name('admin-active-account');
+
+
 
     // after login
     Route::get('/dashboard','App\Http\Controllers\Admin\DashboardController@index')->name('admin-dashboard');
@@ -35,20 +40,29 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('/deployment/edit','App\Http\Controllers\Admin\DeploymentController@deploymentEdit')->name('admin-deployment-edit');
     Route::post('/change/status/info','App\Http\Controllers\Admin\DeploymentController@changeStatusInfoAlert')->name('admin-deployment-change-status-info-alert');
     
+    // ManageUsersController  user email exist or not
+    Route::get('/user/email/exist/ornot','App\Http\Controllers\Admin\ManageUsersController@emailExistOrNot')->name('admin-users-email-exist-ornot');
 
-    // settings
-    Route::get('/settings','App\Http\Controllers\Admin\SettingController@index')->name('admin-setting');
-    Route::post('/save/settings','App\Http\Controllers\Admin\SettingController@saveSettings')->name('admin-save-setting');
 
-    // if($logInUserData['is_admin'] == 1){
+    if(isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] != '' && $_COOKIE['is_admin'] == 1){
+        // settings
+        Route::get('/settings','App\Http\Controllers\Admin\SettingController@index')->name('admin-setting');
+        Route::post('/save/settings','App\Http\Controllers\Admin\SettingController@saveSettings')->name('admin-save-setting');
+
         // Manage users
         Route::get('/manage/users','App\Http\Controllers\Admin\ManageUsersController@index')->name('admin-manage-users');
         Route::post('/manage/users/save','App\Http\Controllers\Admin\ManageUsersController@manageUsersSave')->name('admin-manage-users-save');
-        Route::get('/user/email/exist/ornot','App\Http\Controllers\Admin\ManageUsersController@emailExistOrNot')->name('admin-users-email-exist-ornot');
         Route::post('/manage/users/dataTable','App\Http\Controllers\Admin\ManageUsersController@manageUsersDataTable')->name('admin-manage-users-datatable');
         Route::post('/manage/users/edit','App\Http\Controllers\Admin\ManageUsersController@manageUsersEdit')->name('admin-manage-users-edit');
         Route::post('/manage/users/delete','App\Http\Controllers\Admin\ManageUsersController@manageUsersDelete')->name('admin-manage-users-delete');
-    // }
+
+        // Manage users
+        Route::get('/whitelist/ip','App\Http\Controllers\Admin\WhitelistIpController@index')->name('admin-whitelist-ip');
+        Route::post('/whitelist/ip/save','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpSave')->name('admin-whitelist-ip-save');
+        Route::post('/whitelist/ip/dataTable','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpDataTable')->name('admin-whitelist-ip-datatable');
+        Route::post('/whitelist/ip/edit','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpEdit')->name('admin-whitelist-ip-edit');
+        Route::post('/whitelist/ip/delete','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpDelete')->name('admin-whitelist-ip-delete');
+    }
     
 });
 

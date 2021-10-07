@@ -36,11 +36,7 @@ max-width: 400px !important;
                                 <?php }
                             ?>
                             <th>Status</th>
-                            <?php 
-                            if(userIsSuperAdmin()){ ?>
-                                <th>Kibana Link</th>
-                                <?php }
-                            ?>  
+                            <th>Kibana Link</th>
                             <th style="min-width: 250px">Action</th>
                         </tr>
                     </thead>

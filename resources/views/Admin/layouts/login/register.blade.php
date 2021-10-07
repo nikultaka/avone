@@ -9,6 +9,31 @@
         <div class="card">
             <div class="card-body register-card-body">
                 <p class="login-box-msg">Register a new membership</p>
+                @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    <ul>
+                        <li>{!! \Session::get('success') !!}</li>
+                    </ul>
+                </div>
+                @endif
+                @if (\Session::has('error'))
+                <div class="alert alert-danger">
+                    <ul>
+                        <li>{!! \Session::get('error') !!}</li>
+                    </ul>
+                </div>
+                @endif
+                @if (count($errors))
+                <div class="alert alert-danger">
+                    <!-- <strong>Whoops!</strong> There were some problems with your input.
+                    <br /> -->
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="alert alert-danger print-error-msg" style="display:none;">
                     <ul></ul>
                 </div>
@@ -49,7 +74,7 @@
                         <!-- /.col -->
                     </div>
                 </form>
-                <a href="login.html" class="text-center">I already have a membership</a>
+                <a href="{{route('admin-login')}}" class="text-center">I already have a membership</a>
             </div>
             <!-- /.form-box -->
         </div><!-- /.card -->

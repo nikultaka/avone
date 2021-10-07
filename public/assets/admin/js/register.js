@@ -6,7 +6,7 @@ $(document).ready(function () {
           email: {
             required: true,
             email: true,
-            remote: API_PREFIX + '/api/auth/checkemail',
+            remote: BASE_URL + '/' + ADMIN + '/user/email/exist/ornot',
           },
           password: {
             required: true,
@@ -47,7 +47,7 @@ $(document).ready(function () {
                         $('#email').val('');
                         $('#password').val('');        
                         $('#confirm_password').val('');      
-                        successMsg('User create Sucessfully')
+                        successMsg('Your account created sucessfully')
                     } else if (data.status == 400) {
                         printErrorMsg(data.error)
                     }  else if(data.status == 401){

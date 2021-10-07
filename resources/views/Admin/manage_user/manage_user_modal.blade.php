@@ -29,7 +29,7 @@
                                 <label>Email :</label>
                             </div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="userEmail" id="userEmail" placeholder="Enter Email" required>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" required>
                            
                             </div>
                         </div>

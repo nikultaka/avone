@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use DB;
+use Mail;
 
 class AuthController extends Controller
 {
@@ -69,6 +70,7 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:admin',
             'password' => 'required|string|min:6',
+
         ]);
 
         // if($validator->fails()){
@@ -91,9 +93,23 @@ class AuthController extends Controller
 
         $user = User::create(array_merge(
                     $validator->validated(),
-                    ['password' => bcrypt($request->password)]
+                    ['password' => bcrypt($request->password)],
+                    ['is_admin' => 0],
+                    ['status' => 1]
                 ));
-
+        // send mail to user
+        if($user != '' && $user != null){
+            $data = [
+                    'id'         => $user->_id,
+                    'subject'     => "Register Sucessfully",
+                    'email'       => $request->email,
+                    'name'        => $request->name,
+                ];
+                Mail::send('Admin.email_template.register_template', ["mailData" => $data], function ($message) use ($data) {
+                $message->to($data['email'])
+                        ->subject($data['subject']);
+                });
+        }
         return response()->json([
             'status' => 201,
             'msg' => 'User successfully registered',

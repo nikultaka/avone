@@ -21,7 +21,7 @@ class ManageUsersController extends Controller
         userLoggedIn();
         $validation = Validator::make($request->all(), [
             'userName' => 'required',
-            // 'userEmail' => 'required',
+            // 'email' => 'required',
             // 'password' => 'required',
             'is_admin' => 'required',
             'status' => 'required',
@@ -29,7 +29,7 @@ class ManageUsersController extends Controller
         $update_id = $request->input('userHdnID');        
         if(empty($update_id)){
             $validation->password = 'required';
-            $validation->adminuserEmailemail   = 'required|email|unique:users';
+            $validation->email   = 'required|email|unique:users';
         }
         if ($validation->fails()) {
             $data['status'] = 0;
@@ -44,7 +44,7 @@ class ManageUsersController extends Controller
         $insertData = new User;
         if($update_id == '' && $update_id == null){
             $insertData->name           = $userData['userName'];
-            $insertData->email          = $userData['userEmail'];
+            $insertData->email          = $userData['email'];
             $insertData->password       = Hash::make($userData['password']);
             $insertData->is_admin       = $userData['is_admin'];
             $insertData->status         = $userData['status'];
@@ -59,7 +59,7 @@ class ManageUsersController extends Controller
         }else{
             $updateDetails = User::where('_id',$update_id)->first();
             $updateDetails->name           = $userData['userName'];
-            // $updateDetails->email          = $userData['userEmail'];
+            // $updateDetails->email          = $userData['email'];
             $updateDetails->password       = !empty($userData['password']) ? Hash::make($userData['password']) : $updateDetails->password;
             $updateDetails->is_admin       = $userData['is_admin'];
             $updateDetails->status         = $userData['status'];
@@ -75,7 +75,7 @@ class ManageUsersController extends Controller
     public function emailExistOrNot(Request $request)
 	{
         $email = $request->all();
-        $user_email = $email['userEmail'];
+        $user_email = $email['email'];
         $hid = $request->input('userHdnID');
         $find_user = User::where('email', '=', $user_email);  
         if ($hid > 0) {

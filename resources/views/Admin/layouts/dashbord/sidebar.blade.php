@@ -20,7 +20,7 @@
      </div>
 
      <!-- SidebarSearch Form -->
-     <div class="form-inline">
+     {{-- <div class="form-inline">
        <div class="input-group" data-widget="sidebar-search">
          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
          <div class="input-group-append">
@@ -29,7 +29,7 @@
            </button>
          </div>
        </div>
-     </div>
+     </div> --}}
 
      <!-- Sidebar Menu -->
      <nav class="mt-2">
@@ -55,14 +55,21 @@
                        <p>Manage Users</p>
                      </a>
                    </li>
+                   <li class="nav-item">
+                    <a href="{{ route('admin-setting') }}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
+                       <i class="nav-icon fas fa-cogs"></i>
+                       <p>Settings</p>
+                     </a>
+                   </li>
+                   <li class="nav-item">
+                    <a href="{{ route('admin-whitelist-ip') }}" class="nav-link <?php echo $routeName == 'admin-whitelist-ip' ? 'active':'';?>">
+                       <i class="nav-icon fas fa-cogs"></i>
+                       <p>Whitelist Ip</p>
+                     </a>
+                   </li>
            <?php }
           ?>          
-         <li class="nav-item">
-          <a href="{{ route('admin-setting') }}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
-             <i class="nav-icon fas fa-cogs"></i>
-             <p>Settings</p>
-           </a>
-         </li>
+       
          <li class="nav-item">
           <a href="javascript:void(0)" class="nav-link adminLogout">
              <i class="nav-icon fas fa-sign-out-alt"></i>

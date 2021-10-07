@@ -21,6 +21,8 @@ class LoginController extends Controller
         echo json_encode($response);
         exit;
     }
+
+    
     // public function loginProccess(Request $request)
     // {
     //     $email = $request->email;

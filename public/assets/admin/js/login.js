@@ -64,3 +64,14 @@ function printErrorMsg(msg) {
 }
 
 
+$('.passwordShow').click(function(){
+  if('password' == $('#password').attr('type')){
+       $('#password').prop('type', 'text');
+       $('#passwordShowIcon').removeClass('fa fa-eye');
+       $('#passwordShowIcon').addClass('fa fa-eye-slash');
+  }else{
+       $('#password').prop('type', 'password');
+       $('#passwordShowIcon').removeClass('fa fa-eye-slash');
+       $('#passwordShowIcon').addClass('fa fa-eye');
+  }
+});

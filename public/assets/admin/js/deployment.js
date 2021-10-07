@@ -7,7 +7,7 @@ $(document).ready(function () {
   $("#deploymentModal").on("hidden.bs.modal",function(){
     $('#deploymentName').val('');
     $('#deploymentHdnID').val('');
-    $(".custom-control-input").prop( "checked", false );
+    $('#addNewDeploymentForm')[0].reset();
     $('.modal-title').html('Add new deployment');
     $('#addNewDeploymentBtn').html('Add');
   });
@@ -31,7 +31,6 @@ $(document).ready(function () {
     if (error == 0) {
       showloader();
       if(deploymentHdnID == ''){    
-
         var settings = {
           "url": API_PREFIX + "/api/deployment/create",
           "method": "POST",
@@ -314,6 +313,7 @@ function deploymentDataTable() {
                 // {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'deploymentStatus', name: 'deploymentStatus'},
+                {data: 'kibanaLink', name: 'kibanaLink'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });

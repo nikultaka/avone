@@ -16,6 +16,7 @@ $logInUserData = logInUserData();
    }
     </style>
     <!--  Theme Top JavaScript / CSS   -->
+    <script src="{{ asset('assets/cdn_js/jquery.min.js') }}"></script>
     
      <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -37,6 +38,7 @@ $logInUserData = logInUserData();
     <!--  Custom Top JavaScript   -->
     <link rel="stylesheet" href="{{ asset('assets/cdn_css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/style.css') }}">
+    
     @php
         $settingData = settingData();
         $settingVersion = isset($settingData['version']) ? $settingData['version'] : '';
@@ -49,7 +51,6 @@ $logInUserData = logInUserData();
         $region = config('app.EC_REGION');
         $userIsSuperAdmin = userIsSuperAdmin();
     @endphp
-    <script src="{{ asset('assets/cdn_js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/cdn_js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -105,8 +106,8 @@ $logInUserData = logInUserData();
             </section>
         </div>
     {{-- </div> --}}
+    <script src="{{ asset('assets/theme/admin/js/charts/Chart.min.js') }}"></script>
 
-    @include('Admin.layouts.dashbord.footer')
     
     <!-- Theme JavaScript  -->
     <script src="{{ asset('assets/theme/admin/js/adminlte.js') }}"></script>
@@ -124,6 +125,7 @@ $logInUserData = logInUserData();
     <script src="{{ asset('assets/admin/js/common.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/admin/js/logout.js') }}"></script>
     @yield('footersection')
+    @include('Admin.layouts.dashbord.footer')
 </div>
 </body>
 </html>

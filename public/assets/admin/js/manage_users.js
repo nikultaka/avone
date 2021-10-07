@@ -6,9 +6,9 @@ $(document).ready(function () {
     $("#userModal").on("hidden.bs.modal",function(){
       $('#addNewUserForm')[0].reset();
       $("#password").rules("add", "required");
-      $("#userEmail").rules("add", "required");
-      $('#userEmail').css('cursor', 'text');
-      $('#userEmail').prop('readonly',false);
+      $("#email").rules("add", "required");
+      $('#email').css('cursor', 'text');
+      $('#email').prop('readonly',false);
       $('.modal-title').html('Add new user');
       $('#addUserBtn').html('Add');
     });
@@ -16,7 +16,7 @@ $(document).ready(function () {
     $('form[id="addNewUserForm"]').validate({
         rules: {
           userName: 'required',
-          userEmail: {
+          email: {
             required: true,
             email: true,
             // remote:{
@@ -38,7 +38,7 @@ $(document).ready(function () {
         },
         messages: {
           userName: 'This field is required',
-          userEmail: {
+          email: {
             required:'Password is required',
             email: 'Enter valid email',
             // remote:'That email address is already exist.'
@@ -60,7 +60,7 @@ $(document).ready(function () {
                     var data = JSON.parse(responce);
                     if (data.status == 1) {
                       $('#userName').val('');
-                      $('#userEmail').val('');
+                      $('#email').val('');
                       $('#password').val('');
                       $('#is_admin').val('');
                       $('#status').val('');      
@@ -164,7 +164,7 @@ $(document).on('click','.editUser',function(){
         $('#addUserBtn').html('Update');
         $('.modal-title').html('Update User Data');
         $('#password').prop('required',false);
-        $('#userEmail').prop('required',false);
+        $('#email').prop('required',false);
         var data = JSON.parse(response);
         if (data.status == 1) {
             var result = data.userData;
@@ -172,11 +172,11 @@ $(document).on('click','.editUser',function(){
             var hid = $('#userHdnID').val();
             if(hid != '' && hid != null){
                 $("#password").rules("remove", "required");
-                $("#userEmail").rules("remove", "required");
+                $("#email").rules("remove", "required");
             }
             $('#userName').val(result.name);
-            $('#userEmail').val(result.email).prop('readonly',true);
-            $('#userEmail').css('cursor', 'not-allowed');
+            $('#email').val(result.email).prop('readonly',true);
+            $('#email').css('cursor', 'not-allowed');
             $('#is_admin').val(result.is_admin);
             $('select[name="status"]').val(result.status).trigger("change");
             $('#userModal').modal('show');
