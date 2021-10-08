@@ -36,10 +36,11 @@ class ForgotPasswordController extends Controller
                     'email'        => $email,
                     'token'        => $token,
                 ];
-                Mail::send('Admin.layouts.login.forgot_password.forgot_password_template', ["userdata" => $data], function ($message) use ($data) {
+                $data = Mail::send('Admin.layouts.login.forgot_password.forgot_password_template', ["userdata" => $data], function ($message) use ($data) {
                     $message->to($data['email'])
                         ->subject($data['subject']);
                 });
+                //echo '<pre>'; print_r($data); exit;
                 return redirect('/login')->with('success', 'We send Password Re-set link in Your Register Account');
             } else {
                 return redirect('/login')->with('error', 'User does not exist Regiser First!');
