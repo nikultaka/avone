@@ -1,5 +1,5 @@
 @extends('Admin.layouts.login.index')
-@section('logintitle', 'Admin Login')
+@section('logintitle', 'Admin Forgot Password')
 @section('adminlogin')
     <div class="login-box">
         <div class="login-logo">
@@ -35,8 +35,8 @@
                     </div>
                 @endif
 
-                {{-- <form method="POST" action="{{ route('admin-login-proccess') }}"  id="login_form" name="login_form"> --}}
-                    <form method="POST" onsubmit="return false"  id="forgot_enter_email_form" name="forgot_enter_email_form">
+                    <form method="POST" action="{{ route('admin-forgot-send-mail') }}">
+                    {{-- <form method="POST" onsubmit="return false"  id="forgot_enter_email_form" name="forgot_enter_email_form"> --}}
                         @csrf
                         <div class="input-group mb-3">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email">

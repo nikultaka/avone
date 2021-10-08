@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Carbon\Carbon;
 use Mail;
+use Hash;
 
 class ForgotPasswordController extends Controller
 {
@@ -40,9 +41,14 @@ class ForgotPasswordController extends Controller
                     $message->to($data['email'])
                         ->subject($data['subject']);
                 });
-                return redirect('/login')->with('success', 'We send Password Re-set link in Your Register Account');
+                
+                if(!empty(Mail::failures())){
+                  return redirect('/admin/login')->with('error','Something went wrong please try again');
+                }else{
+                  return redirect('/admin/login')->with('success', 'We send Password Re-set link in Your Register Account');
+                }
             } else {
-                return redirect('/login')->with('error', 'User does not exist Regiser First!');
+                return redirect('/admin/register')->with('error', 'User does not exist Regiser First!');
             }
         }
     }
@@ -73,6 +79,6 @@ class ForgotPasswordController extends Controller
                 }
             }
         }
-        return redirect('/signin')->with('success','Your password Change successfully');
+        return redirect('admin/login')->with('success','Your password Change successfully');
       }
 }

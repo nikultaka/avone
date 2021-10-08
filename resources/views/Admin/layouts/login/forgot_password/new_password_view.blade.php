@@ -1,5 +1,5 @@
 @extends('Admin.layouts.login.index')
-@section('logintitle', 'Admin Login')
+@section('logintitle', 'Admin Set New password')
 @section('adminlogin')
     <div class="login-box">
         <div class="login-logo">
@@ -8,7 +8,7 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Enter your register email</p>
+                <p class="login-box-msg">Enter your new password</p>
                 @if (\Session::has('success'))
                     <div class="alert alert-success">
                         <ul>
@@ -36,7 +36,7 @@
                 @endif
 
                 {{-- <form method="POST" action="{{ route('admin-login-proccess') }}"  id="login_form" name="login_form"> --}}
-                    <form method="POST" onsubmit="return false"  id="forgot_enter_email_form" name="forgot_enter_email_form">
+                    <form method="POST" action="{{route('admin-set-new-password')}}">
                         {{ csrf_field() }}
                         <input type="hidden" id="newpasswordtoken" name="newpasswordtoken" value="{{$newpasswordtoken}}">
                         <div class="input-group mb-3">
