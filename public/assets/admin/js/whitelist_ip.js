@@ -5,6 +5,7 @@ $(document).ready(function () {
     });
     $("#whitelistIpModal").on("hidden.bs.modal",function(){
       $('#whitelistIpForm')[0].reset();
+      $('#ipHdnID').val('');
       $('.modal-title').html('Add new whitelist Ip');
       $('#addWhitelistIpBtn').html('Add');
     });

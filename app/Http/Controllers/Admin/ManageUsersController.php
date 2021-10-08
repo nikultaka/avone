@@ -73,20 +73,29 @@ class ManageUsersController extends Controller
     }
 
     public function emailExistOrNot(Request $request)
-	{
-        $email = $request->all();
-        $user_email = $email['email'];
+	{        
+        $allData = $request->all();
+        $user_email = $allData['email'];
         $hid = $request->input('userHdnID');
         $find_user = User::where('email', '=', $user_email);  
         if ($hid > 0) {
             $find_user->where('id', '!=', $hid);
         }
         $result = $find_user->count();
-		if ($result > 0) {
-			echo json_encode(FALSE);
-		} else {
-			echo json_encode(true);
-		}
+		
+        if($allData['forgot'] == 1 && $allData['forgot'] != ''){
+            if ($result > 0) {
+                echo json_encode(TRUE);
+            } else {
+                echo json_encode(FALSE);
+            }
+        }else{
+            if ($result > 0) {
+                echo json_encode(FALSE);
+            } else {
+                echo json_encode(TRUE);
+            }
+        }
 	}
 
     public function manageUsersDataTable(Request $request){  

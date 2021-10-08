@@ -28,7 +28,11 @@ Route::group(['prefix' => 'admin'], function() {
     // register
     Route::get('/register','App\Http\Controllers\Admin\RegisterController@index')->name('admin-register');
     Route::get('/active/user/account/{id}','App\Http\Controllers\Admin\RegisterController@activeUserAccount')->name('admin-active-account');
-
+    // forgot password
+    Route::get('/forgot/password','App\Http\Controllers\Admin\ForgotPasswordController@index')->name('admin-forgot');
+    Route::post('/forgot/password/send/mail','App\Http\Controllers\Admin\ForgotPasswordController@sendMailToUser')->name('admin-forgot-send-mail');
+    Route::get('/forgot/password/newpassword/{token}','App\Http\Controllers\Admin\ForgotpasswordController@newPasswordView')->name('admin-new-password-view');
+    Route::post('/forgot/password/setnew/password','App\Http\Controllers\admin\ForgotpasswordController@setNewPassword')->name('admin-set-new-password');
 
 
     // after login
@@ -42,8 +46,7 @@ Route::group(['prefix' => 'admin'], function() {
     
     // ManageUsersController  user email exist or not
     Route::get('/user/email/exist/ornot','App\Http\Controllers\Admin\ManageUsersController@emailExistOrNot')->name('admin-users-email-exist-ornot');
-
-
+    
     if(isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] != '' && $_COOKIE['is_admin'] == 1){
         // settings
         Route::get('/settings','App\Http\Controllers\Admin\SettingController@index')->name('admin-setting');

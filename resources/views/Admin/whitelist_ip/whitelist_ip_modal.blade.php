@@ -4,7 +4,7 @@
         <!-- Modal content-->
         <div class="modal-content">
            <div class="modal-header">
-               <h5 class="modal-title">Add New User</h5>
+               <h5 class="modal-title">Add Whitelist Ip</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
                </button>
@@ -18,7 +18,7 @@
                         <input type ="hidden" id="ipHdnID" name="ipHdnID" value="">
                         <div class="form-group row">
                             <div class="col-sm-2">
-                                <label>Name :</label>
+                                <label>Ip Address:</label>
                             </div>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="ipName" id="ipName" placeholder="Enter Whitelist Ip Address" required>

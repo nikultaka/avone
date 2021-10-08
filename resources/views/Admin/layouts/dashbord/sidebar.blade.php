@@ -63,7 +63,7 @@
                    </li>
                    <li class="nav-item">
                     <a href="{{ route('admin-whitelist-ip') }}" class="nav-link <?php echo $routeName == 'admin-whitelist-ip' ? 'active':'';?>">
-                       <i class="nav-icon fas fa-cogs"></i>
+                       <i class="nav-icon fas fa-server"></i>
                        <p>Whitelist Ip</p>
                      </a>
                    </li>

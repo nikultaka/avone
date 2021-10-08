@@ -35,24 +35,23 @@ class WhitelistIpController extends Controller
         $result['msg'] = "Something went wrong please try again";
         $insertData = new WhitelistIp;
         if($update_id == '' && $update_id == null){
-            $insertData->ip_name           = $ipData['ipName'];
+            $insertData->ip_name        = $ipData['ipName'];
             $insertData->status         = $ipData['status'];
             $insertData->created_at     = Carbon::now()->timestamp;
             $insertData->save();
             $insert_id = $insertData->id;
             if($insert_id > 0) {
                 $result['status'] = 1;
-                $result['msg'] = "Ip created Successfully";
-                // $result['id'] = $insert_id;
+                $result['msg'] = "Whitelist Ip add successfully";
             }
         }else{
             $updateDetails = WhitelistIp::where('_id',$update_id)->first();
-            $updateDetails->ip_name           = $ipData['ipName'];
+            $updateDetails->ip_name        = $ipData['ipName'];
             $updateDetails->status         = $ipData['status'];
             $insertData->updated_at        = Carbon::now()->timestamp;
             $updateDetails->save();
             $result['status'] = 1;
-            $result['msg'] = "Ip Update Successfully!";
+            $result['msg'] = "Whitelist Ip update successfully!";
         }
         echo json_encode($result);
         exit;
@@ -61,7 +60,7 @@ class WhitelistIpController extends Controller
     public function whitelistIpDataTable(Request $request){  
         userLoggedIn();
         if ($request->ajax()) {
-            
+
             $data =  WhitelistIp::select('_id','ip_name','status')->get();
 
             return Datatables::of($data)
@@ -110,7 +109,7 @@ class WhitelistIpController extends Controller
             $del_sql = WhitelistIp::where('_id',$delete_id)->delete();
             if($del_sql){
                 $result['status'] = 1;
-                $result['msg'] = "User Deleted Successfully";
+                $result['msg'] = "Whitelist Ip delete successfully";
               }
         }
         echo json_encode($result);

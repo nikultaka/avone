@@ -15,9 +15,8 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>150</h3>
-
-              <p>New Orders</p>
+              <h3>{{$numberOfUser}}</h3>
+              <p>Total User</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
@@ -45,8 +44,7 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3>44</h3>
-
+              <h3>{{$totalRegister}}</h3>
               <p>User Registrations</p>
             </div>
             <div class="icon">
