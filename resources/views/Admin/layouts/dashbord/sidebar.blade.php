@@ -56,15 +56,21 @@
                      </a>
                    </li>
                    <li class="nav-item">
-                    <a href="{{ route('admin-setting') }}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
-                       <i class="nav-icon fas fa-cogs"></i>
-                       <p>Settings</p>
-                     </a>
-                   </li>
-                   <li class="nav-item">
                     <a href="{{ route('admin-whitelist-ip') }}" class="nav-link <?php echo $routeName == 'admin-whitelist-ip' ? 'active':'';?>">
                        <i class="nav-icon fas fa-server"></i>
                        <p>Whitelist Ip</p>
+                     </a>
+                   </li>
+                   <li class="nav-item">
+                    <a href="{{ route('admin-cms-form') }}" class="nav-link <?php echo $routeName == 'admin-cms-form' ? 'active':'';?>">
+                       <i class="nav-icon fas fa-pager"></i>
+                       <p>CMS Pages</p>
+                     </a>
+                   </li>
+                   <li class="nav-item">
+                    <a href="{{ route('admin-setting') }}" class="nav-link <?php echo $routeName == 'admin-setting' ? 'active':'';?>">
+                       <i class="nav-icon fas fa-cogs"></i>
+                       <p>Settings</p>
                      </a>
                    </li>
            <?php }

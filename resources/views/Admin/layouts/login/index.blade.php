@@ -7,6 +7,7 @@
   <style>
     .error {
     color: red;
+   
     }
  </style>        
 
@@ -22,11 +23,16 @@
   {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
    <!-- loader Start -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/theme-default.min.css">
   <div id="loader" class="loader" style="display: none"></div>
 
+  @php
+  $getUserIP = getUserIP(); 
+  @endphp
   <script type="text/javascript"> 
     var BASE_URL = "{{ url('/') }}"; 
     var ADMIN = 'admin';
+    var USER_IP = '<?php echo $getUserIP?>';
     var mode = 'local';
         if(mode == 'local'){
           var API_PREFIX = 'http://127.0.0.1:8001';

@@ -90,12 +90,13 @@ class AuthController extends Controller
         if($validator->fails()){
              return response()->json(['status'=> 400,'error' => $validator->errors()]);
         }
-
+        $userIP = getUserIP();
         $user = User::create(array_merge(
                     $validator->validated(),
                     ['password' => bcrypt($request->password)],
                     ['is_admin' => 0],
-                    ['status' => 1]
+                    ['status' => 0],
+                    ['userIP' => $userIP]
                 ));
         // send mail to user
         if($user != '' && $user != null){
@@ -164,10 +165,11 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     protected function createNewToken($token){
+        $expirationTime = 60*24*100;
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => auth()->factory()->getTTL() * $expirationTime,
             'user' => auth()->user()
         ]);
     }

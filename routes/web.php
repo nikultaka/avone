@@ -65,6 +65,16 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('/whitelist/ip/dataTable','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpDataTable')->name('admin-whitelist-ip-datatable');
         Route::post('/whitelist/ip/edit','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpEdit')->name('admin-whitelist-ip-edit');
         Route::post('/whitelist/ip/delete','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpDelete')->name('admin-whitelist-ip-delete');
+
+         // cms
+         Route::get('/cms','App\Http\Controllers\Admin\CmsController@index')->name('admin-cms-form');
+         Route::post('/cms/add','App\Http\Controllers\Admin\CmsController@addcms')->name('admin-cms-add');
+        //  Route::get('/cms/list','App\Http\Controllers\Admin\CmsController@cmslist')->name('admin-cms-list');
+         Route::post('/cms/datatable','App\Http\Controllers\Admin\CmsController@cmslistdatatable')->name('admin-cms-datatable');
+         Route::post('/cms/delete','App\Http\Controllers\Admin\CmsController@deletecmsdata')->name('admin-cms-delete');
+         Route::get('/cms/edit','App\Http\Controllers\Admin\CmsController@editcmsdata')->name('admin-cms-edit');
+         Route::any('/cms/checkslug','App\Http\Controllers\Admin\CmsController@checkslug')->name('admin-cms-checkslug');
+
     }
     
 });
