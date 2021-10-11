@@ -68,12 +68,11 @@ Route::group(['prefix' => 'admin'], function() {
 
          // cms
          Route::get('/cms','App\Http\Controllers\Admin\CmsController@index')->name('admin-cms-form');
-         Route::post('/cms/add','App\Http\Controllers\Admin\CmsController@addcms')->name('admin-cms-add');
-        //  Route::get('/cms/list','App\Http\Controllers\Admin\CmsController@cmslist')->name('admin-cms-list');
-         Route::post('/cms/datatable','App\Http\Controllers\Admin\CmsController@cmslistdatatable')->name('admin-cms-datatable');
-         Route::post('/cms/delete','App\Http\Controllers\Admin\CmsController@deletecmsdata')->name('admin-cms-delete');
-         Route::get('/cms/edit','App\Http\Controllers\Admin\CmsController@editcmsdata')->name('admin-cms-edit');
-         Route::any('/cms/checkslug','App\Http\Controllers\Admin\CmsController@checkslug')->name('admin-cms-checkslug');
+         Route::post('/cms/add','App\Http\Controllers\Admin\CmsController@addCms')->name('admin-cms-add');
+         Route::post('/cms/datatable','App\Http\Controllers\Admin\CmsController@cmsDatatable')->name('admin-cms-datatable');
+         Route::post('/cms/delete','App\Http\Controllers\Admin\CmsController@deleteCmsData')->name('admin-cms-delete');
+         Route::post('/cms/edit','App\Http\Controllers\Admin\CmsController@editCmsData')->name('admin-cms-edit');
+         Route::any('/cms/checkslug','App\Http\Controllers\Admin\CmsController@checkSlug')->name('admin-cms-checkslug');
 
     }
     

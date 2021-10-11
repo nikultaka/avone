@@ -22,7 +22,7 @@ class CmsController extends Controller
     }
 
 
-    public function addcms(Request $request)
+    public function addCms(Request $request)
     {
         $validation = Validator::make($request->all(), [
             'title'             => 'required',
@@ -50,7 +50,6 @@ class CmsController extends Controller
             $cms->status            = $CmsData['status'];
             $cms->save();
             // $insert_id = $cms->_id;
-            
             if ($cms) {
                 $result['status'] = 1;
                 $result['msg'] = "CMS created successfully";
@@ -77,7 +76,7 @@ class CmsController extends Controller
     // {
     //     return view('Admin/cms/cmslist');
     // }
-    public function cmslistdatatable(Request $request)
+    public function cmsDatatable(Request $request)
     {
         if ($request->ajax()) {
             $data = Cms::select('_id', 'title', 'slug', 'status')->get();
@@ -102,8 +101,8 @@ class CmsController extends Controller
 
                 // })
                 ->addColumn('action', function ($row) {
-                    $action = '<input type="button" value="Delete" class="btn btn-danger" onclick="delete_cms(' . $row->_id . ')">&nbsp';
-                    $action .= '<input type="button" value="Edit" class="btn btn-info" onclick="edit_cms(' . $row->_id . ')">';
+                    $action = '<input type="button" value="Delete" class="btn btn-danger delete_cms" data-id="' . $row->_id . '">&nbsp';
+                    $action .= '<input type="button" value="Edit" class="btn btn-info edit_cms" data-id="' . $row->_id . '">';
                     return $action;
                 })
                 ->rawColumns(['action'])
@@ -111,13 +110,13 @@ class CmsController extends Controller
         }
     }
 
-    function deletecmsdata(Request $request)
+    function deleteCmsData(Request $request)
     {
         $delete_id = $request->input('id');
         $result['status'] = 0;
         $result['msg'] = "Oops ! Cms not Deleted !";
         if (!empty($delete_id)) {
-            $del_sql = Cms::where('id', $delete_id)->delete();
+            $del_sql = Cms::where('_id', $delete_id)->delete();
             if ($del_sql) {
                 $result['status'] = 1;
                 $result['msg'] = "Cms Deleted Successfully";
@@ -127,13 +126,13 @@ class CmsController extends Controller
         exit;
     }
 
-    public function editcmsdata(Request $request)
-    {
-        $edit_id = $request->input('id');
+    public function editCmsData(Request $request){
+        $edit_id = $request->input('id');   
+
         $responsearray = array(); 
         $responsearray['status'] = 0;
         if(!empty($edit_id)){
-            $edit_sql = Cms::where('id',$edit_id)->first();
+            $edit_sql = Cms::where('_id',$edit_id)->first();
             if($edit_sql){
                 $responsearray['status'] = 1;
                 $responsearray['cms']=$edit_sql;
@@ -142,7 +141,7 @@ class CmsController extends Controller
         echo json_encode($responsearray);
         exit;
     }
-    public function checkslug(Request $request)
+    public function checkSlug(Request $request)
     {
         $slug = $request->input('slug');
         $hid = $request->input('hid');

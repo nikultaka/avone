@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    $("#cmsModal").on("hidden.bs.modal",function(){
+        $('#addcmsform')[0].reset();
+        $('.modal-title').html('Add CMS Page');
+        $('#addcms').html('Add');
+        CKEDITOR.instances.description.setData('');
+      });
+
     $('#addNewCms').on('click',function(){
         $('#cmsModal').modal('show');
     });
@@ -59,44 +66,28 @@ $(document).ready(function () {
                 success: function (responce) {
                     var data = JSON.parse(responce);
                     if (data.status == 1) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: data.msg,
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(function() {
-                            window.location = BASE_URL + '/' + ADMIN + '/cms/list';
-                        });
+                        successMsg(data.msg);
                         $('#hid').val('');
                         $('#title').val('');
                         $('#slug').val('');
-                        // $('#description').val('');
                         $('#metatitle').val('');
                         $('#metakeyword').val('');
                         $('#metadescription').val('');
                         $('#status').val('');
-                        $("#addcmsform").removeClass("was-validated");
-                        $('label[class="error"]').remove();
                         $('select').removeClass('error');
                         CKEDITOR.instances.description.setData('');
-    
+                        $('#cmsModal').modal('hide');
                         cmslistdata();
                     } else if (data.status == 0) {
-                        printErrorMsg(data.error)
+                        printErrorMsg(data.error);
                     } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: data.msg,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                        errorMsg(data.msg);
                     }
                 }
             });
 
         }
       });
-
 });
 
 function printErrorMsg(msg) {
@@ -132,7 +123,8 @@ function cmslistdata() {
     });
 }
 
-function delete_cms(id) {
+$(document).on('click','.delete_cms',function(){
+    var id = $(this).data('id');
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -153,27 +145,19 @@ function delete_cms(id) {
                 success: function (response) {
                     var data = JSON.parse(response);
                     if (data.status == 1) {
-                        Swal.fire(
-                            'Deleted!',
-                            data.msg,
-                            'success'
-                        )
+                        successMsg(data.msg);
                     } else {
-                        Swal.fire(
-                            'Deleted!',
-                            data.msg,
-                            'error'
-                        )
+                        errorMsg(data.msg);
                     }
                     cmslistdata();
                 }
             });
         }
     })
-}
+})
 
-function edit_cms(id) {
-    alert("sd")
+$(document).on('click','.edit_cms',function(){
+    var id = $(this).data('id');
     $.ajax({
         url: BASE_URL + '/' + ADMIN + '/cms/edit',
         type: 'POST',
@@ -184,16 +168,20 @@ function edit_cms(id) {
         success: function (response) {
             $('#cmsModal').modal('show');
             $('#addcms').html('Update');
-            $('.modal-title').html('Update Cms level');
+            $('.modal-title').html('Update Cms');
             var data = JSON.parse(response);
             if (data.status == 1) {
                 var result = data.cms;
-                console.log(result);
-                $('#hid').val(result.id);
-                $('#salary').val(result.salary);
-                $('#status').val(result.status);
+                $('#hid').val(result._id);
+                $('#title').val(result.title);
+                $('#slug').val(result.slug);
+                CKEDITOR.instances.description.setData(result.descriptioneditor);
+                $('#metatitle').val(result.metatitle);
+                $('#metakeyword').val(result.metakeyword);
+                $('#metadescription').val(result.metadescription);
+                $('select[name="status"]').val(result.status).trigger("change");
             }
         }
     });
-}
+});
 
