@@ -62,7 +62,7 @@
                      </a>
                    </li>
                    <li class="nav-item">
-                    <a href="{{ route('admin-cms-form') }}" class="nav-link <?php echo $routeName == 'admin-cms-form' ? 'active':'';?>">
+                    <a href="{{ route('admin-cms') }}" class="nav-link <?php echo $routeName == 'admin-cms' ? 'active':'';?>">
                        <i class="nav-icon fas fa-pager"></i>
                        <p>CMS Pages</p>
                      </a>

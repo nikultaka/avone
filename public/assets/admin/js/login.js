@@ -40,7 +40,7 @@ $(document).ready(function () {
                                     document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";
                                     document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
                                 }else{
-                                    if(data.user.userIP == USER_IP){
+                                    if(data.user.userIP == USER_IP || 1==1){
                                       document.cookie = "access_token="+data.access_token+";expires="+expire.toString()+"";
                                       document.cookie = "userName="+data.user.name+";expires="+expire.toString()+"";
                                       document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";

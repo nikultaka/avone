@@ -10,6 +10,9 @@
                </button>
              </div>
             <div class="modal-body">
+                <div class="alert alert-danger print-error-msg" style="display:none;">
+                    <ul></ul>
+                </div>
                 <form onsubmit="return false" method="post" id="addcmsform" class="needs-validation" novalidate name="addcmsform">
                     {{ csrf_field() }}
                     <input type="hidden" id="hid" name="hid" value="{{isset($edit_cms->id) ? $edit_cms->id : ''}}">

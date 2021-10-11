@@ -24,9 +24,10 @@ class CmsController extends Controller
 
     public function addCms(Request $request)
     {
+        $update_id = $request->input('hid');
         $validation = Validator::make($request->all(), [
             'title'             => 'required',
-            'slug'              => 'required|unique:cms',
+            'slug'              => 'required|unique:cms,_id,'.$update_id,
             'description'       => 'required',
         ]);
         if ($validation->fails()) {
@@ -35,7 +36,6 @@ class CmsController extends Controller
             echo json_encode($data);
             exit();
         }
-        $update_id = $request->input('hid');
         $CmsData = $request->all();
         $result['status'] = 0;
         $result['msg'] = "Please enter valid data";
@@ -145,10 +145,12 @@ class CmsController extends Controller
     {
         $slug = $request->input('slug');
         $hid = $request->input('hid');
+        
         $checkslug = Cms::where('slug', '=', $slug);
-        if ($hid > 0) {
-            $checkslug->where('id', '!=', $hid);
+        if ($hid != '' && $hid != null) {
+            $checkslug->where('_id', '!=', $hid);
         }
+        
         $checkslugcount = $checkslug->count();
         if ($checkslugcount > 0) {
             echo json_encode(FALSE);

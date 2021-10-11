@@ -26,7 +26,9 @@ $(document).ready(function () {
                    url: BASE_URL + '/' + ADMIN + '/cms/checkslug',
                    type:'get',
                    data:{
-                       hid : $("#hid").val(),
+                        hid : function(){
+                                  return $("#hid").val();
+                              }
                    }
                 }
             },
