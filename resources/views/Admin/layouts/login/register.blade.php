@@ -40,7 +40,10 @@
                 <form onsubmit="return false" method="post" id="register_form" name="register_form">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="name" name="name" placeholder="Full name">
-                        <div class="input-group-append"><div class="input-group-text"><span class="fas fa-user"></span></div></div>
+                        <div class="input-group-append">
+                            <div class="input-group-text"><span class="fas fa-user"></span></div>
+                        </div>
+                        <label id="name-error" class="error" for="name"></label>
                     </div>
                     <div class="input-group mb-3">
                         <label for="email"></label>
@@ -48,18 +51,21 @@
                         <div class="input-group-append">
                             <div class="input-group-text"><span class="fas fa-envelope"></span></div>
                         </div>
+                        <label id="email-error" class="error" for="email"></label>
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text"><span class="fas fa-lock"></span></div>
                         </div>
+                        <label id="password-error" class="error" for="password"></label>
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Retype password">
                         <div class="input-group-append">
                             <div class="input-group-text"><span class="fas fa-lock"></span></div>
                         </div>
+                        <label id="confirm_password-error" class="error" for="confirm_password"></label>
                     </div>
                     <div class="row">
                         <div class="col-8">

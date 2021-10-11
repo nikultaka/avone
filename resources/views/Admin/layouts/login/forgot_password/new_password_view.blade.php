@@ -44,12 +44,14 @@
                             <div class="input-group-append">
                                 <div class="input-group-text passwordShow"><span id="passwordShowIcon" class="fa fa-eye"></span></div>
                             </div>
+                            <label id="password-error" class="error" for="password"></label>
                         </div>
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
                             <div class="input-group-append">
                                 <div class="input-group-text confirmPasswordShow"><span id="confirmPasswordShowIcon" class="fa fa-eye"></span></div>
                             </div>
+                            <label id="confirm_password-error" class="error" for="confirm_password"></label>
                         </div>
                         <div class="row">
                             <div class="col-8">

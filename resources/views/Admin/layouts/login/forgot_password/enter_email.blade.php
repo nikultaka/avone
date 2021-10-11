@@ -42,6 +42,7 @@
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-envelope"></span></div>
                             </div>
+                            <label id="email-error" class="error" for="email"></label>
                         </div>
                         <div class="row">
                             <div class="col-12">

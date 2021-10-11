@@ -74,7 +74,7 @@ class WhitelistIpController extends Controller
                             return $status;
                     })
                     ->addColumn('action', function($row){
-                        $action = '<input type="button" value="Delete" class="btn btn-danger deleteIp" data-id="'. $row->_id .'" ">';
+                        $action = '<input type="button" value="Delete" class="btn btn-danger deleteIp" data-id="'. $row->_id .'" ">&nbsp';
                         $action .= '<input type="button" value="Edit" class="btn btn-primary editIp" data-id="'. $row->_id . '" ">';     
                         return $action;
                     })
