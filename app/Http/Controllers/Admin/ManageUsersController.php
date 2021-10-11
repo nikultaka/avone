@@ -83,7 +83,7 @@ class ManageUsersController extends Controller
         }
         $result = $find_user->count();
 		
-        if($allData['forgot'] == 1 && $allData['forgot'] != ''){
+        if(isset($allData['forgot']) && $allData['forgot'] == 1 && $allData['forgot'] != ''){
             if ($result > 0) {
                 echo json_encode(TRUE);
             } else {
