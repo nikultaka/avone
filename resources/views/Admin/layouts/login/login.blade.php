@@ -43,6 +43,7 @@
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-envelope"></span></div>
                             </div>
+                            <label id="email-error" class="error" for="email"></label>
                         </div>
 
                         <div class="input-group mb-3">
@@ -50,6 +51,7 @@
                             <div class="input-group-append">
                                 <div class="input-group-text passwordShow"><span id="passwordShowIcon" class="fa fa-eye"></span></div>
                             </div>
+                            <label id="password-error" class="error" for="password"></label>
                         </div>
 
                         <div class="row">
