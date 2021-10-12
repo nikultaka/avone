@@ -4,7 +4,7 @@
 {{-- Breadcrumb --}}
 @section('rightbreadcrumb','Dashboard')
 @section('leftbreadcrumb','Home')
-@section('leftsubbreadcrumb','Dashboard v1')
+@section('leftsubbreadcrumb','Dashboard')
 {{-- End Breadcrumb --}}
 
 @section('admincontent')

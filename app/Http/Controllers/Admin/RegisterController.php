@@ -14,16 +14,16 @@ class RegisterController extends Controller
 
     public function activeUserAccount($id)
     {
-        $find_user = User::where('id', $id)->first();
+        $find_user = User::where('_id', $id)->first();
             if ($find_user->status != '1') {
                 $find_user->status = '1';
                 $find_user->updated_at = Carbon::now();
                 $find_user->save();
                 if ($find_user) {
-                    return redirect('/signin')->with('success', 'Your account has been activated Successfully..');
+                    return redirect('/admin/login')->with('success', 'Your account has been activated Successfully..');
                 }
             } else {
-                return redirect('/signin')->with('error', 'Your account already activated.');
+                return redirect('/admin/login')->with('error', 'Your account already activated.');
             }
     }
 }

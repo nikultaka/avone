@@ -24,6 +24,12 @@ $logInUserData = logInUserData();
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/icheck-bootstrap.min.css') }}">
+     <!-- JQVMap -->
+    <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/jqvmap.min.css') }}">
+     <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/daterangepicker.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
@@ -106,11 +112,26 @@ $logInUserData = logInUserData();
             </section>
         </div>
     {{-- </div> --}}
+    <script src="{{ asset('assets/cdn_js/jquery-ui.min.js') }}"></script>
+    <script>
+      $.widget.bridge('uibutton', $.ui.button)
+    </script>
     <script src="{{ asset('assets/theme/admin/js/charts/Chart.min.js') }}"></script>
-
-    
+     <!-- sparkline -->
+    <script type="text/javascript" src="{{ asset('assets/theme/admin/js/sparkline.js') }}"></script>
+    <!-- JQVMap -->
+    <script src="{{ asset('assets/theme/admin/js/jquery.vmap.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/admin/js/jquery.vmap.usa.js') }}"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="{{ asset('assets/theme/admin/js/jquery.knob.min.js') }}"></script>
+    <!-- moment daterangepicker  -->
+    <script src="{{ asset('assets/theme/admin/js/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/admin/js/daterangepicker.js') }}"></script>
+     <!-- Summernote -->
+    <script src="{{ asset('assets/theme/admin/js/summernote-bs4.min.js') }}"></script>
     <!-- Theme JavaScript  -->
     <script src="{{ asset('assets/theme/admin/js/adminlte.js') }}"></script>
+  
     <!-- End theme JavaScript -->
 
     <!-- Custom footer JavaScript -->
@@ -124,6 +145,7 @@ $logInUserData = logInUserData();
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ asset('assets/admin/js/common.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/admin/js/logout.js') }}"></script>
+    
     @yield('footersection')
     @include('Admin.layouts.dashbord.footer')
 </div>

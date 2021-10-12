@@ -46,8 +46,13 @@ Route::group(['prefix' => 'admin'], function() {
     
     // ManageUsersController  user email exist or not
     Route::get('/user/email/exist/ornot','App\Http\Controllers\Admin\ManageUsersController@emailExistOrNot')->name('admin-users-email-exist-ornot');
+
+    //privacyPolicy
+    Route::get('/page/{cms_slug}','App\Http\Controllers\Admin\CmsPagePreviewController@index')->name('privacyPolicy');
     
+    // only user Admin access
     if(isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] != '' && $_COOKIE['is_admin'] == 1){
+        
         // settings
         Route::get('/settings','App\Http\Controllers\Admin\SettingController@index')->name('admin-setting');
         Route::post('/save/settings','App\Http\Controllers\Admin\SettingController@saveSettings')->name('admin-save-setting');
@@ -65,8 +70,15 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('/whitelist/ip/dataTable','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpDataTable')->name('admin-whitelist-ip-datatable');
         Route::post('/whitelist/ip/edit','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpEdit')->name('admin-whitelist-ip-edit');
         Route::post('/whitelist/ip/delete','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpDelete')->name('admin-whitelist-ip-delete');
+
+         // cms
+         Route::get('/view/cms','App\Http\Controllers\Admin\CmsController@index')->name('admin-cms');
+         Route::post('/cms/add','App\Http\Controllers\Admin\CmsController@addCms')->name('admin-cms-add');
+         Route::post('/cms/datatable','App\Http\Controllers\Admin\CmsController@cmsDatatable')->name('admin-cms-datatable');
+         Route::post('/cms/delete','App\Http\Controllers\Admin\CmsController@deleteCmsData')->name('admin-cms-delete');
+         Route::post('/cms/edit','App\Http\Controllers\Admin\CmsController@editCmsData')->name('admin-cms-edit');
+         Route::any('/cms/checkslug','App\Http\Controllers\Admin\CmsController@checkSlug')->name('admin-cms-checkslug');
     }
-    
 });
 
 

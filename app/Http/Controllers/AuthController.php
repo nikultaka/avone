@@ -12,7 +12,7 @@ use Mail;
 
 class AuthController extends Controller
 {
-  
+
     /**
      * Create a new AuthController instance.
      *
@@ -32,7 +32,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request){ 
-        
+
         /*$books = DB::collection('users')->get();
         echo '<pre>'; print_r($books); exit;
         DB::table('users')->insert(array('email'=>'chisdsdsd@gmail.com'));*/    
@@ -42,7 +42,7 @@ class AuthController extends Controller
         // $deployment->save();
         // die;
 
-    	$validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
         ]);
@@ -65,13 +65,14 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request) {
-        
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:admin',
-            'password' => 'required|string|min:6',
 
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|between:2,100',
+                'email' => 'required|string|email|max:100|unique:admin',
+                'password' => 'required|string|min:6',
+
+            ]);
 
         // if($validator->fails()){
         //      return response()->json($validator->errors(), 400);
@@ -87,44 +88,48 @@ class AuthController extends Controller
         //     'user' => $user
         // ], 201);
 
-        if($validator->fails()){
-             return response()->json(['status'=> 400,'error' => $validator->errors()]);
-        }
-
-        $user = User::create(array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password)],
-                    ['is_admin' => 0],
-                    ['status' => 1]
-                ));
+            if($validator->fails()){
+               return response()->json(['status'=> 400,'error' => $validator->errors()]);
+           }
+           $userIP = getUserIP();
+           $user = User::create(array_merge(
+            $validator->validated(),
+            ['password' => bcrypt($request->password)],
+            ['is_admin' => 0],
+            ['status' => 0],
+            ['userIP' => $userIP]
+        ));
         // send mail to user
-        if($user != '' && $user != null){
+           if($user != '' && $user != null){
             $data = [
-                    'id'         => $user->_id,
-                    'subject'     => "Register Sucessfully",
-                    'email'       => $request->email,
-                    'name'        => $request->name,
-                ];
-                Mail::send('Admin.email_template.register_template', ["mailData" => $data], function ($message) use ($data) {
+                'id'         => $user->_id,
+                'subject'     => "Register Sucessfully",
+                'email'       => $request->email,
+                'name'        => $request->name,
+            ];
+            Mail::send('Admin.email_template.register_template', ["mailData" => $data], function ($message) use ($data) {
                 $message->to($data['email'])
-                        ->subject($data['subject']);
-                });
+                ->subject($data['subject']);
+            });
         }
         return response()->json([
             'status' => 201,
             'msg' => 'User successfully registered',
             'user' => $user
-        ]);
+        ]);    
+    } catch (\Exception $e) {
+        echo $e->getMessage(); die;
     }
+}
 
-    public function emailcheck(Request $request){
-	    $checkemail = [];
-		if (count($checkemail) > 0) {
-			echo json_encode(FALSE);
-		} else {
-			echo json_encode(true);
-		}
-	}
+public function emailcheck(Request $request){
+   $checkemail = [];
+   if (count($checkemail) > 0) {
+     echo json_encode(FALSE);
+ } else {
+     echo json_encode(true);
+ }
+}
 
 
     /**
@@ -164,10 +169,11 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     protected function createNewToken($token){
+        $expirationTime = 60*24*100;
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => auth()->factory()->getTTL() * $expirationTime,
             'user' => auth()->user()
         ]);
     }

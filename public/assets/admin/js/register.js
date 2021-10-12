@@ -36,6 +36,7 @@ $(document).ready(function () {
           },
         },
         submitHandler: function(form) {
+          showloader();
             $.ajax({
                 url: API_PREFIX + '/api/auth/register',
                 type: 'post',
@@ -47,11 +48,14 @@ $(document).ready(function () {
                         $('#email').val('');
                         $('#password').val('');        
                         $('#confirm_password').val('');      
-                        successMsg('Your account created sucessfully')
+                        successMsg(data.msg);
+                        hideloader();
                     } else if (data.status == 400) {
-                        printErrorMsg(data.error)
+                        printErrorMsg(data.error);
+                        hideloader();
                     }  else if(data.status == 401){
-                      errorMsg(data.error)
+                        errorMsg(data.error);
+                        hideloader();
                     }
                 }
             });

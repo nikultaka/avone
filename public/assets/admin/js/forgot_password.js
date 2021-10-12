@@ -59,5 +59,18 @@ $('.passwordShow').click(function(){
     }
   });
 
+  
+$('.confirmPasswordShow').click(function(){
+     if('password' == $('#password').attr('type')){
+          $('#password').prop('type', 'text');
+          $('#confirmPasswordShowIcon').removeClass('fa fa-eye');
+          $('#confirmPasswordShowIcon').addClass('fa fa-eye-slash');
+     }else{
+          $('#password').prop('type', 'password');
+          $('#confirmPasswordShowIcon').removeClass('fa fa-eye-slash');
+          $('#confirmPasswordShowIcon').addClass('fa fa-eye');
+     }
+   });
+
 
   

@@ -36,10 +36,11 @@ class ForgotPasswordController extends Controller
                     'subject'      => "Forgot Password",
                     'email'        => $email,
                     'token'        => $token,
-                ];
-                $data = Mail::send('Admin.layouts.login.forgot_password.forgot_password_template', ["userdata" => $data], function ($message) use ($data) {
+                ]; 
+
+                Mail::send('Admin.email_template.forgot_password_template', ["userdata" => $data], function ($message) use ($data) {
                     $message->to($data['email'])
-                        ->subject($data['subject']);
+                            ->subject($data['subject']);
                 });
                 
                 if(!empty(Mail::failures())){

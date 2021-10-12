@@ -48,7 +48,7 @@
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
                             <div class="input-group-append">
-                                <div class="input-group-text passwordShow"><span id="passwordShowIcon" class="fa fa-eye"></span></div>
+                                <div class="input-group-text confirmPasswordShow"><span id="confirmPasswordShowIcon" class="fa fa-eye"></span></div>
                             </div>
                         </div>
                         <div class="row">
