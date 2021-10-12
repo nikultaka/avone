@@ -6,9 +6,25 @@
   <title>@yield('logintitle')</title>
   <style>
     .error {
-    color: red;
-   
+      color: red;
+      width: 100%;
+      display: block;
+      .input-group-text{
+        border : #b94a48 1px solid;
+      }
     }
+    h1:has(+ .error){
+
+    }
+    .valid{
+        border-color:rgb(12, 228, 12);
+        background: green;
+    }
+
+    /* .error_div{
+      width: 100%;
+      display: block;
+    } */
  </style>        
 
   <!-- Google Font: Source Sans Pro -->

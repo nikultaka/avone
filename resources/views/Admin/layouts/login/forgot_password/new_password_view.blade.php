@@ -51,7 +51,9 @@
                             <div class="input-group-append">
                                 <div class="input-group-text confirmPasswordShow"><span id="confirmPasswordShowIcon" class="fa fa-eye"></span></div>
                             </div>
-                            <label id="confirm_password-error" class="error" for="confirm_password"></label>
+                            <div>
+                                <label id="confirm_password-error" class="error" for="confirm_password"></label>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-8">
