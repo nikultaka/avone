@@ -23,7 +23,7 @@ $(document).ready(function () {
           email: {
             required:'Email is required',
               email:'Enter a valid email',
-              remote: 'That email address is already registered.'
+              remote: 'That email address is already registered.',
           },
           password: {
             required:'Password is required',
