@@ -31,8 +31,8 @@ Route::group(['prefix' => 'admin'], function() {
     // forgot password
     Route::get('/forgot/password','App\Http\Controllers\Admin\ForgotPasswordController@index')->name('admin-forgot');
     Route::post('/forgot/password/send/mail','App\Http\Controllers\Admin\ForgotPasswordController@sendMailToUser')->name('admin-forgot-send-mail');
-    Route::get('/forgot/password/newpassword/{token}','App\Http\Controllers\Admin\ForgotpasswordController@newPasswordView')->name('admin-new-password-view');
-    Route::post('/forgot/password/setnew/password','App\Http\Controllers\admin\ForgotpasswordController@setNewPassword')->name('admin-set-new-password');
+    Route::get('/forgot/password/newpassword/{token}','App\Http\Controllers\Admin\ForgotPasswordController@newPasswordView')->name('admin-new-password-view');
+    Route::post('/setnew/password','App\Http\Controllers\Admin\ForgotPasswordController@setNewPassword')->name('admin-set-new-password');
 
 
     // after login
