@@ -4,16 +4,23 @@ $(document).ready(function () {
         $('.modal-title').html('Add CMS Page');
         $('#addcms').html('Add');
         CKEDITOR.instances.description.setData('');
+        $('#slug').css('cursor', 'text');
+        $('#slug').prop('readonly',false);
+        $('#hid').val('');
       });
 
     $('#addNewCms').on('click',function(){
         $('#cmsModal').modal('show');
     });
     $("#title").on("keyup", function () {
-        var text = $(this).val();
-        var text = text.replace(" ", "-");
-        $("#slug").val(text);
+        var hiddenID = $('#hid').val();
+            if(hiddenID == ''){
+                    var text = $(this).val();
+                    var text = text.replace(" ", "-");
+                    $("#slug").val(text);
+            }
     });
+    
     cmslistdata();
     $('form[id="addcmsform"]').validate({
         ignore: [],
@@ -174,6 +181,8 @@ $(document).on('click','.edit_cms',function(){
             var data = JSON.parse(response);
             if (data.status == 1) {
                 var result = data.cms;
+                $('#slug').css('cursor', 'not-allowed');
+                $('#slug').prop('readonly',true);
                 $('#hid').val(result._id);
                 $('#title').val(result.title);
                 $('#slug').val(result.slug);

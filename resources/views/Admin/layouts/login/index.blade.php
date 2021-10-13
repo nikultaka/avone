@@ -9,9 +9,9 @@
       color: red;
       width: 100%;
       display: block;
-      .input-group-text{
+      /* .input-group-text{
         border : #b94a48 1px solid;
-      }
+      } */
     }
     h1:has(+ .error){
 
