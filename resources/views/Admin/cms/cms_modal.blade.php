@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <button type="submit" id="addcms" name="addcms" class="btn btn-primary">Submit</button>
-                        <button type="submit" class="btn btn-secondary">Cancle</button>
+                        <button type="button" class="btn btn-secondary">Cancle</button>
                  </form>
             </div>
         </div>

@@ -15,4 +15,14 @@ class CmsPagePreviewController extends Controller
         return view('Admin/cms_page_preview/cms_page')->with(compact('cmsPageData'));
     }
 
+    public  function term(Request $request){
+        $response['status'] = 0;
+        $cmsPageData = Cms::where('slug','term')->first();
+        if($cmsPageData != ''){
+            $response['status'] = 1;
+            $response['cmsPageData'] = $cmsPageData;
+        }
+        echo json_encode($response);
+        exit;
+    }
 }

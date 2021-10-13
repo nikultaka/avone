@@ -49,6 +49,8 @@ Route::group(['prefix' => 'admin'], function() {
 
     //privacyPolicy
     Route::get('/page/{cms_slug}','App\Http\Controllers\Admin\CmsPagePreviewController@index')->name('privacyPolicy');
+    Route::get('/term','App\Http\Controllers\Admin\CmsPagePreviewController@term')->name('term');
+
     
     // only user Admin access
     if(isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] != '' && $_COOKIE['is_admin'] == 1){

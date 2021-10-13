@@ -1,6 +1,7 @@
 @extends('Admin.layouts.login.index')
 @section('logintitle', 'Admin Login')
 @section('adminlogin')
+@include('Admin.cms_page_preview.terms_modal')
     <div class="register-box">
         <div class="register-logo">
             <a href="../../index2.html"><b>Admin</b>LTE</a>
@@ -78,7 +79,7 @@
                         <div class="col-8">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                <label for="agreeTerms"> I agree to the <a href="#">terms</a></label>
+                                <label for="agreeTerms"> I agree to the <a href="javascript:void(0)" id="term">terms</a></label>
                             </div>
                         </div>
                         <!-- /.col -->

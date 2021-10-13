@@ -57,7 +57,7 @@ class CmsController extends Controller
         } else {
             $UpdateDetails = Cms::where('_id', $update_id)->first();
             $UpdateDetails->title             = $CmsData['title'];
-            $UpdateDetails->slug              = $CmsData['slug'];
+            // $UpdateDetails->slug              = $CmsData['slug'];
             $UpdateDetails->descriptioneditor = $CmsData['description'];
             $UpdateDetails->metatitle         = $CmsData['metatitle'];
             $UpdateDetails->metakeyword       = $CmsData['metakeyword'];
