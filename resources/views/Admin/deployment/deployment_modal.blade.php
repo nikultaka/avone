@@ -10,6 +10,9 @@
                 </button>
               </div>
              <div class="modal-body">
+                <div class="alert alert-danger print-error-msg" style="display:none;">
+                    <ul></ul>
+                </div>
                  <form id="addNewDeploymentForm" name="addNewDeploymentForm" onsubmit="return false">
                     <input type="hidden" id="deploymentHdnID" name="deploymentHdnID" value="">
                     <h3><b>Name</b></h3>

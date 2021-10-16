@@ -40,7 +40,9 @@ Route::group(['prefix' => 'admin'], function() {
 
     // deployment
     Route::get('/deployment','App\Http\Controllers\Admin\DeploymentController@index')->name('admin-deployment');
-    Route::get('/deployment/dataTable','App\Http\Controllers\Admin\DeploymentController@deploymentDataTable')->name('admin-deployment-datatable');
+    Route::any('/deployment/dataTable','App\Http\Controllers\Admin\DeploymentController@deploymentDataTable')->name('admin-deployment-datatable');
+    Route::post('/insert/deployment/db','App\Http\Controllers\Admin\DeploymentController@deploymentInsert')->name('admin-deployment-insert-db');
+    Route::post('/delete/deployment/db','App\Http\Controllers\Admin\DeploymentController@deploymentDelete')->name('admin-deployment-delete-db');
     Route::post('/deployment/edit','App\Http\Controllers\Admin\DeploymentController@deploymentEdit')->name('admin-deployment-edit');
     Route::post('/change/status/info','App\Http\Controllers\Admin\DeploymentController@changeStatusInfoAlert')->name('admin-deployment-change-status-info-alert');
     
