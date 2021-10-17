@@ -3,6 +3,14 @@
 if (!function_exists('curlCall')) {
     function curlCall($method, $path, $postdata = '')
     {
+        $EC_API_KEY = '';
+        if(config('app.EC_API_KEY') != ''){
+            $EC_API_KEY = config('app.EC_API_KEY');
+        }else{
+            $settingData = settingData();
+            $EC_API_KEY = isset($settingData['ecapikey']) ? $settingData['ecapikey'] : '';
+        }
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => env("API_URL") . $path,
@@ -18,25 +26,17 @@ if (!function_exists('curlCall')) {
             CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_HTTPHEADER => array(
-                'Authorization: ApiKey ' . config('app.EC_API_KEY'),
+                'Authorization: ApiKey ' .$EC_API_KEY,
                 'Content-Type: application/json'
             ),
         ));
         $response = curl_exec($curl);
         // $error_msg = curl_error($curl);
-        //     echo '<pre>';
-        //     print_r($error_msg);
-        //     die;
         curl_close($curl);
         return json_decode($response);
     }
 }
 
-function deploymentWithNewKeyOddHelper($array = '')
-{
-
-    return $array;
-}
 function recursive_change_key($arr, $set)
 {
     if (is_array($arr) && is_array($set)) {
@@ -53,13 +53,13 @@ function recursive_change_key($arr, $set)
 // _________________________________________________________ Deployment list api call function______________________________________________________________
 
 if (!function_exists('deploymentListArrayHelper')) {
-    function deploymentListArrayHelper()
+    function deploymentListArrayHelper($API_PREFIX,$token)
     {
-        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : '';
+        // $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : '';
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://127.0.0.1:8001/api/deployment/list',
+            CURLOPT_URL => $API_PREFIX.'/api/deployment/list',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -68,7 +68,7 @@ if (!function_exists('deploymentListArrayHelper')) {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer ' . $token . ''
+                'Authorization: Bearer '. $token . ''
             ),
         ));
 
@@ -78,7 +78,10 @@ if (!function_exists('deploymentListArrayHelper')) {
 
         if ($response != '' && $response != null && !empty($response)) {
             $json_decode = json_decode($response);
-            $json_decode_response = $json_decode->deployments;
+            if($json_decode !=''){
+                $json_decode_response = $json_decode->deployments;
+            }
+            
         }
         if (!empty($json_decode_response) && $json_decode_response != '' && $json_decode_response != null) {
             $deploymentsIdAndNameArray = array();
@@ -91,7 +94,7 @@ if (!function_exists('deploymentListArrayHelper')) {
                     $deploymentsId = $deploymentsIdAndName['id'];
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'http://127.0.0.1:8001/api/deployment/view',
+                        CURLOPT_URL => $API_PREFIX.'/api/deployment/view',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -123,7 +126,7 @@ if (!function_exists('deploymentListArrayHelper')) {
                         if ($json_decode_response_view->resources->kibana[0]->info->status != '') {
                             $plankibanaSize = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->size->value;
                             $plankibanaZone = $json_decode_response_view->resources->kibana[0]->info->plan_info->current->plan->cluster_topology[0]->zone_count;
-                            $kibanaAliasedUrl = $json_decode_response_view->resources->kibana[0]->info->metadata->aliased_url;
+                            $kibanaAliasedUrl = $json_decode_response_view->resources->kibana[0]->info->metadata->sso_url;
                         }
 
                         if ($json_decode_response_view->resources->apm[0]->info->status != '') {

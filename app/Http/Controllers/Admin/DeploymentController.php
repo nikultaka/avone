@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
+use App\Models\Deployment;
 use Symfony\Component\HttpFoundation\Session\Session;
-
+use Carbon\Carbon;
+use Validator;
 
 class DeploymentController extends Controller
 {
@@ -17,16 +19,92 @@ class DeploymentController extends Controller
         return view('Admin/deployment/deployment_list');
     }
 
+    public function deploymentInsert(Request $request){
+        userLoggedIn();
+        $validation = Validator::make($request->all(), [
+            'deploymentName' => 'required',
+            'sizePerZoneElastic' => 'required',
+            'availabilityZonesElastic' => 'required',
+            'sizePerZoneKibana' => 'required',
+            'availabilityZonesKibana' => 'required',
+            'sizePerZoneApm' => 'required',
+            'availabilityZonesApm' => 'required',
+        ]);
+        $update_id = $request->input('deploymentHdnID');        
+        if ($validation->fails()) {
+            $data['status'] = 0;
+            $data['msg'] = $validation->errors()->all();
+            echo json_encode($data);
+            exit();
+        }
+
+        $deploymentData = $request->all();
+        $result['status'] = 2;
+        $result['msg'] = "Something went wrong please try again";
+        $insertData = new Deployment;
+        if($update_id == '' && $update_id == null){
+            $insertData->deploymentID                   = $deploymentData['deploymentID'];
+            $insertData->deploymentName                 = $deploymentData['deploymentName'];
+            $insertData->sizePerZoneElastic             = $deploymentData['sizePerZoneElastic'];
+            $insertData->availabilityZonesElastic       = $deploymentData['availabilityZonesElastic'];
+            $insertData->sizePerZoneKibana              = $deploymentData['sizePerZoneKibana'];
+            $insertData->availabilityZonesKibana        = $deploymentData['availabilityZonesKibana'];
+            $insertData->sizePerZoneApm                 = $deploymentData['sizePerZoneApm'];
+            $insertData->availabilityZonesApm           = $deploymentData['availabilityZonesApm'];
+            $insertData->status                         = '';
+            $insertData->created_at                     = Carbon::now()->timestamp;
+            $insertData->save();
+            $insert_id = $insertData->id;
+            if($insert_id > 0) {
+                $result['status'] = 1;
+                $result['msg'] = "Deployments created successfully";
+                // $result['id'] = $insert_id;
+            }
+        }else{
+            $updateDetails = Deployment::where('deploymentID',$update_id)->first();
+            $updateDetails->deploymentName                 = $deploymentData['deploymentName'];
+            $updateDetails->sizePerZoneElastic             = $deploymentData['sizePerZoneElastic'];
+            $updateDetails->availabilityZonesElastic       = $deploymentData['availabilityZonesElastic'];
+            $updateDetails->sizePerZoneKibana              = $deploymentData['sizePerZoneKibana'];
+            $updateDetails->availabilityZonesKibana        = $deploymentData['availabilityZonesKibana'];
+            $updateDetails->sizePerZoneApm                 = $deploymentData['sizePerZoneApm'];
+            $updateDetails->availabilityZonesApm           = $deploymentData['availabilityZonesApm'];
+            // $updateDetails->status                         = '';
+            $updateDetails->updated_at                     = Carbon::now()->timestamp;
+            $updateDetails->save();
+            $result['status'] = 1;
+            $result['msg'] = "Deployments updated successfully";
+        }
+        echo json_encode($result);
+        exit;
+    }
+
+    function deploymentDelete(Request $request)
+    {
+        $delete_id = $request->input('deploymentID');
+        
+        $result['status'] = 0;
+        $result['msg'] = "Oops ! Deployments not Deleted !";
+        if ($delete_id != '' && $delete_id != null) {
+            $del_sql = Deployment::where('deploymentID', $delete_id)->delete();
+            if ($del_sql) {
+                $result['status'] = 1;
+                $result['msg'] = "Deployments Delete successfully";
+            }
+        }
+        echo json_encode($result);
+        exit;
+    }
 
     public function deploymentDataTable(Request $request){  
         userLoggedIn();
         $token = getLoginAccessToken();
-        $deploymentListArrayHelper = deploymentListArrayHelper();      
+        $API_PREFIX = $request->urlbase;
+        $deploymentListArrayHelper = deploymentListArrayHelper($API_PREFIX,$token);      
 
         $request->session()->forget('deploymentList');
         $request->session()->put('deploymentList', $deploymentListArrayHelper);
         
-        $API_PREFIX = $request->urlbase;
         $ajaxResponse['status'] = 0;
         if ($request->ajax()) {
             $encode_response = deploymentListApiCall($API_PREFIX,$token);
@@ -37,11 +115,7 @@ class DeploymentController extends Controller
 
             return Datatables::of($data)
                     ->addIndexColumn()
-                    // ->addColumn('id', function($row){
-                    //     $id = $row->id;
-                    //     return $id;
-                    //  })
-
+                    
                      ->addColumn('name', function($row){
                          $name = $row->name;
                          return $name;
@@ -64,7 +138,7 @@ class DeploymentController extends Controller
                     })
                    ->addColumn('kibanaLink', function($row) use ($deploymentListArrayHelper) {  
                             $kibanaAliasedUrl = $deploymentListArrayHelper[$row->id];
-                            $kibanaLink = '<a href="'.$kibanaAliasedUrl['kibanaAliasedUrl'].'" style="margin-left: 50px;" target="_blank" data-toggle="tooltip" title="Open Link"><i class="text-center fas fa-external-link-alt"></i></a>';
+                            $kibanaLink = '<a href="https://api.elastic-cloud.com/'.$kibanaAliasedUrl['kibanaAliasedUrl'].'" style="margin-left: 50px;" target="_blank" data-toggle="tooltip" title="Open Link"><i class="text-center fas fa-external-link-alt"></i></a>';
                             return $kibanaLink;
                     })
                     ->addColumn('action', function($row){
@@ -82,8 +156,9 @@ class DeploymentController extends Controller
 
     
     public function changeStatusInfoAlert(Request $request){
-
-        $deploymentListArrayHelper = deploymentListArrayHelper();              
+        $token = getLoginAccessToken();
+        $API_PREFIX = $request->urlbase;
+        $deploymentListArrayHelper = deploymentListArrayHelper($API_PREFIX,$token);              
         $deploymentWithNewKey = array();
             foreach($deploymentListArrayHelper as $deploymentList ){
                 $deploymentWithNewKey[]  = recursive_change_key($deploymentList, array('name' => 'name_'.$deploymentList['id'].'', 'status' => 'status_'.$deploymentList['id'].''));
@@ -141,6 +216,8 @@ class DeploymentController extends Controller
         echo json_encode($ajaxResponse);
         exit; 
     }
+
+    
 
    
 }

@@ -11,5 +11,10 @@ class Deployment extends Model
     use HasFactory;
     protected $connection = 'mongodb';
     protected $collection = 'deployments';
+    public $timestamps = false;
+
+    protected $fillable = [
+        '_id','deploymentID','deploymentName','sizePerZoneElastic','availabilityZonesElastic','sizePerZoneKibana','availabilityZonesKibana','sizePerZoneApm','availabilityZonesApm','status','created_at','updated_at'
+    ];
 }
  

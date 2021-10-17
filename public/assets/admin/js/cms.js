@@ -1,46 +1,46 @@
-$(document).ready(function () {
-    $("#cmsModal").on("hidden.bs.modal",function(){
+$(document).ready(function() {
+    $("#cmsModal").on("hidden.bs.modal", function() {
         $('#addcmsform')[0].reset();
         $('.modal-title').html('Add CMS Page');
         $('#addcms').html('Add');
         CKEDITOR.instances.description.setData('');
         $('#slug').css('cursor', 'text');
-        $('#slug').prop('readonly',false);
+        $('#slug').prop('readonly', false);
         $('#hid').val('');
-      });
+    });
 
-    $('#addNewCms').on('click',function(){
+    $('#addNewCms').on('click', function() {
         $('#cmsModal').modal('show');
     });
-    $("#title").on("keyup", function () {
+    $("#title").on("keyup", function() {
         var hiddenID = $('#hid').val();
-            if(hiddenID == ''){
-                    var text = $(this).val();
-                    var text = text.replace(" ", "-");
-                    $("#slug").val(text);
-            }
+        if (hiddenID == '') {
+            var text = $(this).val();
+            var text = text.replace(" ", "-");
+            $("#slug").val(text);
+        }
     });
-    
+
     cmslistdata();
     $('form[id="addcmsform"]').validate({
         ignore: [],
         debug: false,
         rules: {
             title: 'required',
-            slug:{
-                required:true,
-                remote:{
-                   url: BASE_URL + '/' + ADMIN + '/cms/checkslug',
-                   type:'get',
-                   data:{
-                        hid : function(){
-                                  return $("#hid").val();
-                              }
-                   }
+            slug: {
+                required: true,
+                remote: {
+                    url: BASE_URL + '/' + ADMIN + '/cms/checkslug',
+                    type: 'get',
+                    data: {
+                        hid: function() {
+                            return $("#hid").val();
+                        }
+                    }
                 }
             },
             description: {
-                required: function(){
+                required: function() {
                     CKEDITOR.instances.description.updateElement();
                 },
             },
@@ -49,30 +49,31 @@ $(document).ready(function () {
             // metadescription: 'required',
         },
         messages: {
-          title: 'Title is required',
-          slug: {
-            // unique: 'Slug Must be unique',
-            required:'Supg is required',
-            remote:'Slug is Already Exist'
+            title: 'Title is required',
+            slug: {
+                // unique: 'Slug Must be unique',
+                required: 'Supg is required',
+                remote: 'Slug is Already Exist'
 
-          },
-          description: {
-            required:"Discription is required",
-          },
-        //   metatitle: 'Meta title is required',
-        //   metakeyword: 'Meta keyword is required',
-        //   metadescription: 'Meta description is required.',
+            },
+            description: {
+                required: "Discription is required",
+            },
+            //   metatitle: 'Meta title is required',
+            //   metakeyword: 'Meta keyword is required',
+            //   metadescription: 'Meta description is required.',
         },
-        
+
         submitHandler: function(form) {
             for (var i in CKEDITOR.instances) {
                 CKEDITOR.instances[i].updateElement();
             };
+            showloader();
             $.ajax({
                 url: BASE_URL + '/' + ADMIN + '/cms/add',
                 type: 'post',
                 data: $('#addcmsform').serialize(),
-                success: function (responce) {
+                success: function(responce) {
                     var data = JSON.parse(responce);
                     if (data.status == 1) {
                         successMsg(data.msg);
@@ -87,22 +88,25 @@ $(document).ready(function () {
                         CKEDITOR.instances.description.setData('');
                         $('#cmsModal').modal('hide');
                         cmslistdata();
+                        hideloader();
                     } else if (data.status == 0) {
                         printErrorMsg(data.error);
+                        hideloader();
                     } else {
                         errorMsg(data.msg);
+                        hideloader();
                     }
                 }
             });
 
         }
-      });
+    });
 });
 
 function printErrorMsg(msg) {
     $(".print-error-msg").find("ul").html('');
     $(".print-error-msg").css('display', 'block');
-    $.each(msg, function (key, value) {
+    $.each(msg, function(key, value) {
         $(".print-error-msg").find("ul").append('<li>' + value + '</li>');
     });
 }
@@ -132,7 +136,7 @@ function cmslistdata() {
     });
 }
 
-$(document).on('click','.delete_cms',function(){
+$(document).on('click', '.delete_cms', function() {
     var id = $(this).data('id');
     Swal.fire({
         title: 'Are you sure?',
@@ -144,6 +148,7 @@ $(document).on('click','.delete_cms',function(){
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
+            showloader();
             $.ajax({
                 url: BASE_URL + '/' + ADMIN + '/cms/delete',
                 type: 'POST',
@@ -151,11 +156,13 @@ $(document).on('click','.delete_cms',function(){
                     'id': id,
                     "_token": $("[name='_token']").val(),
                 },
-                success: function (response) {
+                success: function(response) {
                     var data = JSON.parse(response);
                     if (data.status == 1) {
+                        hideloader();
                         successMsg(data.msg);
                     } else {
+                        hideloader();
                         errorMsg(data.msg);
                     }
                     cmslistdata();
@@ -165,7 +172,7 @@ $(document).on('click','.delete_cms',function(){
     })
 })
 
-$(document).on('click','.edit_cms',function(){
+$(document).on('click', '.edit_cms', function() {
     var id = $(this).data('id');
     $.ajax({
         url: BASE_URL + '/' + ADMIN + '/cms/edit',
@@ -174,7 +181,7 @@ $(document).on('click','.edit_cms',function(){
             'id': id,
             "_token": $("[name='_token']").val(),
         },
-        success: function (response) {
+        success: function(response) {
             $('#cmsModal').modal('show');
             $('#addcms').html('Update');
             $('.modal-title').html('Update Cms');
@@ -182,7 +189,7 @@ $(document).on('click','.edit_cms',function(){
             if (data.status == 1) {
                 var result = data.cms;
                 $('#slug').css('cursor', 'not-allowed');
-                $('#slug').prop('readonly',true);
+                $('#slug').prop('readonly', true);
                 $('#hid').val(result._id);
                 $('#title').val(result.title);
                 $('#slug').val(result.slug);
@@ -195,4 +202,3 @@ $(document).on('click','.edit_cms',function(){
         }
     });
 });
-

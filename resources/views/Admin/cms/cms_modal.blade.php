@@ -57,7 +57,6 @@
                                 </div>
                                 <div class="col-sm-10">
                                   <input type="text" class="form-control" id="metakeyword" name = "metakeyword" placeholder="Enter Meta Keyword" value="{{isset($edit_cms->metakeyword) ? $edit_cms->metakeyword : ''}}" >
-
                               </div>
                         </div>
                         <div class="form-group row">
