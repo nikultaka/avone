@@ -104,6 +104,8 @@ class DeploymentController extends Controller
 
         $request->session()->forget('deploymentList');
         $request->session()->put('deploymentList', $deploymentListArrayHelper);
+
+
         
         $ajaxResponse['status'] = 0;
         if ($request->ajax()) {
