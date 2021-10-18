@@ -1,5 +1,5 @@
 @extends('Admin.layouts.dashbord.index')
-@section('admintitle', 'Deployment')
+@section('admintitle', 'CMS')
 {{-- Breadcrumb --}}
 @section('rightbreadcrumb', 'CMS')
 @section('leftbreadcrumb', 'CMS')
