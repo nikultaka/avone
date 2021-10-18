@@ -101,15 +101,16 @@ class DeploymentController extends Controller
         $token = getLoginAccessToken();
         $API_PREFIX = $request->urlbase;
         $deploymentListArrayHelper = deploymentListArrayHelper($API_PREFIX,$token);      
-
+        
         $request->session()->forget('deploymentList');
         $request->session()->put('deploymentList', $deploymentListArrayHelper);
         
         $ajaxResponse['status'] = 0;
         if ($request->ajax()) {
             $encode_response = deploymentListApiCall($API_PREFIX,$token);
+
             $data = [];
-            if(!empty($encode_response) && $encode_response != '' && $encode_response != null){
+            if(isset($encode_response) && $encode_response != '' && $encode_response != null){
                 $data = $encode_response->deployments;
             }
 
@@ -141,8 +142,15 @@ class DeploymentController extends Controller
                             $kibanaLink = '<a href="https://api.elastic-cloud.com/'.$kibanaAliasedUrl['kibanaAliasedUrl'].'" style="margin-left: 50px;" target="_blank" data-toggle="tooltip" title="Open Link"><i class="text-center fas fa-external-link-alt"></i></a>';
                             return $kibanaLink;
                     })
-                    ->addColumn('action', function($row){
-                        $action = "<input type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info editDeployment' data-id='".$row->id."'>&nbsp";
+                    ->addColumn('action', function($row) use ($deploymentListArrayHelper){
+                        $deploymentList = $deploymentListArrayHelper[$row->id];
+                        $status = $deploymentList['status'];
+                        if($status != '' && $status != 1){ 
+                            $action = "<input type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info editDeployment' data-id='".$row->id."'>&nbsp";
+                        }else{
+                            $action = "<input type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info editDeployment' data-id='".$row->id." disabled'>&nbsp";
+                        }
+                        
                         $action .= "<input type='button' value='Delete' data-toggle='tooltip' title='Delete Deployment' class='btn btn-danger deleteDeployment' data-id='".$row->id."'>&nbsp";     
                         if(userIsSuperAdmin()){
                             $action .= "<input type='button' value='View' class='btn btn-success data-toggle='tooltip' title='View Deployment Data' viewDeployment' data-id='".$row->id."'>";     

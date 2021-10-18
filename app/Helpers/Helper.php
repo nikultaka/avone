@@ -73,15 +73,15 @@ if (!function_exists('deploymentListArrayHelper')) {
         ));
 
         $response = curl_exec($curl);
+        
         curl_close($curl);
         $deploymentsDataArray = array();
 
         if ($response != '' && $response != null && !empty($response)) {
             $json_decode = json_decode($response);
-            if($json_decode !=''){
+            if($json_decode !='' && isset($json_decode->deployments)){
                 $json_decode_response = $json_decode->deployments;
             }
-            
         }
         if (!empty($json_decode_response) && $json_decode_response != '' && $json_decode_response != null) {
             $deploymentsIdAndNameArray = array();
@@ -111,7 +111,7 @@ if (!function_exists('deploymentListArrayHelper')) {
                     curl_close($curl);
                     $json_decode_response_view = json_decode($responseViewApi);
 
-                    if ($json_decode_response_view->healthy != '' && $json_decode_response_view->healthy != '') {
+                    if ($json_decode_response_view->healthy != '' && $json_decode_response_view->healthy != null) {
                         $planElasticSearchArray = $json_decode_response_view->resources->elasticsearch[0]->info->plan_info->current->plan->cluster_topology;
                         $currentPlanElasticSearch = '';
                         foreach ($planElasticSearchArray as $planElasticSearch) {
