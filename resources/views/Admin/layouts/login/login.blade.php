@@ -75,7 +75,7 @@
                 <!-- /.social-auth-links -->
 
                 <p class="mb-1">
-                    <a href="{{route('admin-forgot')}}">I forgot my password</a>
+                    <a href="{{route('admin-forgot')}}">Forgot Password ?</a>
                 </p>
             </div>
             <!-- /.login-card-body -->

@@ -11,6 +11,7 @@ if (!function_exists('curlCall')) {
             $EC_API_KEY = isset($settingData['ecapikey']) ? $settingData['ecapikey'] : '';
         }
 
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => env("API_URL") . $path,
@@ -56,8 +57,7 @@ if (!function_exists('deploymentListArrayHelper')) {
     function deploymentListArrayHelper($API_PREFIX,$token)
     {
         // $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : '';
-        $curl = curl_init();
-
+        /*$curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $API_PREFIX.'/api/deployment/list',
             CURLOPT_RETURNTRANSFER => true,
@@ -71,10 +71,10 @@ if (!function_exists('deploymentListArrayHelper')) {
                 'Authorization: Bearer '. $token . ''
             ),
         ));
-
         $response = curl_exec($curl);
-        
-        curl_close($curl);
+        curl_close($curl);*/
+
+        $response = json_encode(curlCall('GET','deployments')); 
         $deploymentsDataArray = array();
 
         if ($response != '' && $response != null && !empty($response)) {
@@ -92,7 +92,7 @@ if (!function_exists('deploymentListArrayHelper')) {
             if (count($deploymentsIdAndNameArray) > 0) {
                 foreach ($deploymentsIdAndNameArray as $deploymentsIdAndNameKey => $deploymentsIdAndName) {
                     $deploymentsId = $deploymentsIdAndName['id'];
-                    $curl = curl_init();
+                    /*$curl = curl_init();
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => $API_PREFIX.'/api/deployment/view',
                         CURLOPT_RETURNTRANSFER => true,
@@ -109,7 +109,11 @@ if (!function_exists('deploymentListArrayHelper')) {
                     ));
                     $responseViewApi = curl_exec($curl);
                     curl_close($curl);
-                    $json_decode_response_view = json_decode($responseViewApi);
+                    $json_decode_response_view = json_decode($responseViewApi);*/
+                    $json_decode_response_view = curlCall('GET','deployments/'.$deploymentsId,array()); 
+
+                    //echo '<pre>'; print_r($json_decode_response_view); exit;
+                    
 
                     if ($json_decode_response_view->healthy != '' && $json_decode_response_view->healthy != null) {
                         $planElasticSearchArray = $json_decode_response_view->resources->elasticsearch[0]->info->plan_info->current->plan->cluster_topology;
@@ -230,8 +234,7 @@ if (!function_exists('getAccessToken')) {
 if (!function_exists('deploymentListApiCall')) {
     function deploymentListApiCall($API_PREFIX, $token)
     {
-        $curl = curl_init();
-
+        /*$curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $API_PREFIX . '/api/deployment/list',
             CURLOPT_RETURNTRANSFER => true,
@@ -248,10 +251,10 @@ if (!function_exists('deploymentListApiCall')) {
                 'Authorization: Bearer ' . $token . ''
             ),
         ));
-
         $response = curl_exec($curl);
         curl_close($curl);
-        return json_decode($response);
+        return json_decode($response);*/
+        return $response = curlCall('GET','deployments'); 
     }
 }
 

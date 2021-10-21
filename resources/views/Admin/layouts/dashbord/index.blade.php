@@ -66,7 +66,7 @@ $logInUserData = logInUserData();
         var ADMIN = 'admin';
         var mode = 'local';
         if(mode == 'local'){
-          var API_PREFIX = 'http://127.0.0.1:8001';
+          var API_PREFIX = 'http://127.0.0.1:8000';
         }
         if(mode == 'live'){
           var API_PREFIX = 'http://127.0.0.1:8000';

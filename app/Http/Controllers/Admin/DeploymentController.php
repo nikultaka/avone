@@ -147,10 +147,10 @@ class DeploymentController extends Controller
                     ->addColumn('action', function($row) use ($deploymentListArrayHelper){
                         $deploymentList = $deploymentListArrayHelper[$row->id];
                         $status = $deploymentList['status'];
-                        if($status != '' && $status != 1){ 
+                        if($status == 1){ 
                             $action = "<input type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info editDeployment' data-id='".$row->id."'>&nbsp";
                         }else{
-                            $action = "<input type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info editDeployment' data-id='".$row->id." disabled'>&nbsp";
+                            $action = "<input disabled type='button' value='Edit' data-toggle='tooltip' title='Edit Deployment' class='btn btn-info' data-id='".$row->id."'>&nbsp";
                         }
                         
                         $action .= "<input type='button' value='Delete' data-toggle='tooltip' title='Delete Deployment' class='btn btn-danger deleteDeployment' data-id='".$row->id."'>&nbsp";     
@@ -218,7 +218,8 @@ class DeploymentController extends Controller
         $deploymentID = $request->deploymentID;
         $ajaxResponse['status'] = 0;
         $encode_response = '';
-        $encode_response = deploymentViewApiCall($API_PREFIX,$token,$deploymentID);
+        //$encode_response = deploymentViewApiCall($API_PREFIX,$token,$deploymentID);
+        $encode_response = curlCall('GET','deployments/'.$deploymentID,array());  
         if(!empty($encode_response) && $encode_response !='' && $encode_response !=null){
             $ajaxResponse['status'] = 1;
             $ajaxResponse['deploymentsEditData'] = $encode_response;
