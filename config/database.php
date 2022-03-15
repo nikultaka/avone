@@ -100,7 +100,11 @@ return [
             'database' => env('MONGO_DB_DATABASE'),
             'username' => env('MONGO_DB_USERNAME'),
             'password' => env('MONGO_DB_PASSWORD'),
-            'options'  => []   
+            //'options'  => []
+            'options' => [
+                'ssl' => (env('IS_DEVELOPMENT') == '1' ? false : true),
+                'retrywrites' => false
+            ]   
         ]
 
     ],

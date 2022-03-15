@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 if (!function_exists('curlCall')) {
     function curlCall($method, $path, $postdata = '')
     {
@@ -181,8 +183,10 @@ if (!function_exists('settingData')) {
 if (!function_exists('logInUserData')) {
     function logInUserData()
     {
-        $userData['is_admin'] = isset($_COOKIE['is_admin']) ? $_COOKIE['is_admin'] : '';
-        $userData['userName'] = isset($_COOKIE['userName']) ? $_COOKIE['userName'] : '';
+        $log_in_user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : '';
+        $userAllData = User::where('_id',$log_in_user_id)->get()->toArray();
+        $userData = $userAllData[0];
+        
         if (!empty($userData) && $userData != '') {
             return $userData;
         } else {
@@ -193,7 +197,10 @@ if (!function_exists('logInUserData')) {
 if (!function_exists('userIsSuperAdmin')) {
     function userIsSuperAdmin()
     {
-        $is_admin = isset($_COOKIE['is_admin']) ? $_COOKIE['is_admin'] : '';
+        $log_in_user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : '';
+        $userAllData = User::where('_id',$log_in_user_id)->get();
+        $is_admin = $userAllData[0]->is_admin;
+        
         if ($is_admin == 1) {
             return true;
         } else {

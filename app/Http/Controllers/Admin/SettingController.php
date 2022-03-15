@@ -60,3 +60,5 @@ class SettingController extends Controller
         exit();
     }
 }
+
+

@@ -4,18 +4,30 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class LoginController extends Controller
 {
     public function index()
     {
+        // if(userLoggedIn()){
+        //     $numberOfUser = DB::table('users')->get()->count();
+        //     $totalRegister = DB::table('users')->where('status',0)->get()->count();
+        
+        // return view('Admin/dashboard')->with(compact('numberOfUser','totalRegister'));
+        // }else{
+        //     return view('Admin/layouts/login/login');
+        // }
+
         return view('Admin/layouts/login/login');
+        
     }
 
     public  function logout(Request $request){
         setcookie("userName", "", time() - 3600);
         setcookie("access_token", "", time() - 3600);
         setcookie("is_admin", "", time() - 3600);
+        setcookie("user_id", "", time() - 3600);
         
         $response['status'] = 1;
         echo json_encode($response);

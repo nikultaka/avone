@@ -28,6 +28,7 @@
  </style>        
 
   <!-- Google Font: Source Sans Pro -->
+  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('assets/theme/admin/css/fontawesome-free/css/all.min.css') }}">
@@ -40,22 +41,26 @@
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
    <!-- loader Start -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.79/theme-default.min.css">
+   {{-- google recaptcha api --}}
+   {{-- <script src="//www.google.com/recaptcha/api.js"></script> --}}
+   <script src="https://www.google.com/recaptcha/api.js"></script>
   <div id="loader" class="loader" style="display: none"></div>
 
   @php
   $getUserIP = getUserIP(); 
   @endphp
   <script type="text/javascript"> 
-    var BASE_URL = "{{ url('/') }}"; 
+    var BASE_URL = "{{ url('/') }}";
     var ADMIN = 'admin';
     var USER_IP = '<?php echo $getUserIP?>';
-    var mode = 'local';
+    var mode = '<?php echo env('ENVIRONMENT'); ?>';
         if(mode == 'local'){
-          var API_PREFIX = 'http://127.0.0.1:8000';
+          var API_PREFIX = BASE_URL
         }
         if(mode == 'live'){
-          var API_PREFIX = 'http://127.0.0.1:8000';
+          var API_PREFIX = BASE_URL
         }
+
 </script>
 </head>
 <body class="hold-transition login-page">

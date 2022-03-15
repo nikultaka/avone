@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
 use App\Models\Deployment;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Carbon\Carbon;
 use Validator;
@@ -21,6 +22,7 @@ class DeploymentController extends Controller
 
     public function deploymentInsert(Request $request){
         userLoggedIn();
+        $logInUserData = logInUserData();
         $validation = Validator::make($request->all(), [
             'deploymentName' => 'required',
             'sizePerZoneElastic' => 'required',
@@ -43,6 +45,7 @@ class DeploymentController extends Controller
         $result['msg'] = "Something went wrong please try again";
         $insertData = new Deployment;
         if($update_id == '' && $update_id == null){
+            $insertData->user_id                        = $logInUserData['user_id'];
             $insertData->deploymentID                   = $deploymentData['deploymentID'];
             $insertData->deploymentName                 = $deploymentData['deploymentName'];
             $insertData->sizePerZoneElastic             = $deploymentData['sizePerZoneElastic'];
@@ -95,9 +98,11 @@ class DeploymentController extends Controller
         echo json_encode($result);
         exit;
     }
-
+    
     public function deploymentDataTable(Request $request){  
         userLoggedIn();
+        $logInUserData = logInUserData();
+        $logInUserId = $logInUserData['_id'];
         $token = getLoginAccessToken();
         $API_PREFIX = $request->urlbase;
         $deploymentListArrayHelper = deploymentListArrayHelper($API_PREFIX,$token);      
@@ -105,17 +110,32 @@ class DeploymentController extends Controller
         $request->session()->forget('deploymentList');
         $request->session()->put('deploymentList', $deploymentListArrayHelper);
 
-
-        
         $ajaxResponse['status'] = 0;
         if ($request->ajax()) {
             $encode_response = deploymentListApiCall($API_PREFIX,$token);
-
+            
+            $logInUserAllDeploymentIDs = Deployment::select('deploymentID')->where('user_id',$logInUserId)->get()->toArray();
+            $dataDeployments = [];
             $data = [];
             if(isset($encode_response) && $encode_response != '' && $encode_response != null){
-                $data = $encode_response->deployments;
-            }
-
+                if(userIsSuperAdmin()){
+                        $data = $encode_response->deployments;
+                } else {
+                    $dataDeployments = $encode_response->deployments;
+                    foreach($logInUserAllDeploymentIDs as $logInUserDeploymentIDKey => $logInUserDeploymentID){
+                        foreach($dataDeployments as $dataDeploymentsKey => $dataDeploymentsValue){
+                            $myArray = json_decode(json_encode($dataDeploymentsValue), true);
+                                if (in_array($logInUserDeploymentID['deploymentID'], $myArray))
+                                    {
+                                        $data[] = $myArray;
+                                    
+                                    }
+                        } 
+                    }
+                    $data  = json_decode(json_encode($data));
+                }   
+        }
+        
             return Datatables::of($data)
                     ->addIndexColumn()
                     
@@ -155,7 +175,7 @@ class DeploymentController extends Controller
                         
                         $action .= "<input type='button' value='Delete' data-toggle='tooltip' title='Delete Deployment' class='btn btn-danger deleteDeployment' data-id='".$row->id."'>&nbsp";     
                         if(userIsSuperAdmin()){
-                            $action .= "<input type='button' value='View' class='btn btn-success data-toggle='tooltip' title='View Deployment Data' viewDeployment' data-id='".$row->id."'>";     
+                            $action .= "<input type='button' value='View' class='viewDeployment btn btn-success data-toggle='tooltip' title='View Deployment Data'  data-id='".$row->id."'>";     
                         }
                         return $action;
                     })

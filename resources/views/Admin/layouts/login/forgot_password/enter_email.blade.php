@@ -3,7 +3,7 @@
 @section('adminlogin')
     <div class="login-box">
         <div class="login-logo">
-            <p>Logo</p>
+            <a href="{{route('admin-login')}}"><img src="{{asset('assets/theme/admin/img/logo.png')}}" alt="Logo"></a>
         </div>
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">

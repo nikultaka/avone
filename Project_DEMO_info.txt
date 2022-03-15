@@ -1,0 +1,21 @@
+DEMO project name avone
+database name = avone
+
+
+git:-
+https://FiTS-DevOpsOrg@dev.azure.com/FiTS-DevOpsOrg/AVONE-UI/_git/DEMO
+username : npanchal
+password : kxl7jplomujsirzkvbfxqafpmtj3a2nbsychqdlme3uqy5z4hnja
+
+
+
+
+'https://fits-webapp-avone-dev.azurewebsites.net' 
+has been registered.
+Use this site key in the HTML code your site serves to users.
+site_key = 6LcwHfgcAAAAAD7Qs2OGdDjr6bD09sor1e-Lby_X
+Use this secret key for communication between your site and reCAPTCHA.
+secret_key  = 6LcwHfgcAAAAAGSkTP6iIOkxuY2XdfkJ0ZamTexn
+
+
+https://www.google.com/recaptcha/admin/site/486030463

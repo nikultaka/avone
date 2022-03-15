@@ -4,10 +4,10 @@
 @include('Admin.cms_page_preview.terms_modal')
     <div class="register-box">
         <div class="register-logo">
-            <a href="../../index2.html"><b>Admin</b>LTE</a>
+                <a href="{{route('admin-login')}}"><img src="{{asset('assets/theme/admin/img/logo.png')}}" alt="Logo"></a>
         </div>
 
-        <div class="card">
+        <div class="card card-outline card-primary">
             <div class="card-body register-card-body">
                 <p class="login-box-msg">Register a new membership</p>
                 @if (\Session::has('success'))
@@ -75,11 +75,24 @@
                             <label id="confirm_password-error" class="error" for="confirm_password"></label>
                         {{-- </div> --}}
                     </div>
+ 
+
+                    @if(config('services.recaptcha.dev') == 0)
+                        <div class="input-group mb-3">
+                            @if(config('services.recaptcha.key'))
+                                <div class="g-recaptcha" data-sitekey="{{config('services.recaptcha.key')}}"></div>
+                                    @error('g-recaptcha-response')
+                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
+                            @endif
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
                                 <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                                 <label for="agreeTerms"> I agree to the <a href="javascript:void(0)" id="term">terms</a></label>
+                                <label id="terms-error" class="error" for="terms"></label>
                             </div>
                         </div>
                         <!-- /.col -->

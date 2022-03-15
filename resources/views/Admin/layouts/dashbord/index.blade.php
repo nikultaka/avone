@@ -64,12 +64,12 @@ $logInUserData = logInUserData();
     <script type="text/javascript"> 
         var BASE_URL = "{{ url('/') }}"; 
         var ADMIN = 'admin';
-        var mode = 'local';
+        var mode = '<?php echo env('ENVIRONMENT'); ?>';
         if(mode == 'local'){
-          var API_PREFIX = 'http://127.0.0.1:8000';
+          var API_PREFIX = BASE_URL
         }
         if(mode == 'live'){
-          var API_PREFIX = 'http://127.0.0.1:8000';
+          var API_PREFIX = BASE_URL
         }
         var ELASTIC_REGION = '<?php echo $region; ?>'; 
         var ELASTIC_VERSION = '<?php echo $version; ?>';

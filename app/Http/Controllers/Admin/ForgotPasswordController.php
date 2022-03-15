@@ -46,11 +46,11 @@ class ForgotPasswordController extends Controller
                 if(!empty(Mail::failures())){
                   return redirect('/admin/login')->with('error','Something went wrong please try again');
                 }else{
-                  return redirect('/admin/login')->with('success', 'We send Password Re-set link in Your Register Account');
+                  return redirect('/admin/login')->with('success', 'We sent Password Re-set link in Your Register Email');
                 }
 
             } else {
-                return redirect('/admin/register')->with('error', 'User does not exist Regiser First!');
+                return redirect('/admin/register')->with('error', "User doen't exist Regiser First!");
             }
         }
     }
@@ -77,10 +77,10 @@ class ForgotPasswordController extends Controller
                   $find_user->password =  Hash::make($allData['password']);
                   $find_user->save(); 
                 }else{
-                  return back()->with('Password and confirm password does not match');
+                  return back()->with("Password and confirm password doesn't match");
                 }
             }
         }
-        return redirect('admin/login')->with('success','Your password Change successfully');
+        return redirect('admin/login')->with('success','Your password Changed successfully');
       }
 }

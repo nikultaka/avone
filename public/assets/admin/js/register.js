@@ -17,6 +17,9 @@ $(document).ready(function () {
                 minlength: 6,
                 equalTo: "#password"
             },
+            terms : {
+              required: true,
+            },
         },
         messages: {
           name: 'Name field is required',
@@ -33,6 +36,9 @@ $(document).ready(function () {
             required:'Confirm password is required',
             minlength: 'Confirm password must be at least 6 characters long',
             equalTo : 'Password and confirm password should be same',
+          },
+          terms : {
+            required: 'select terms',
           },
         },
         submitHandler: function(form) {

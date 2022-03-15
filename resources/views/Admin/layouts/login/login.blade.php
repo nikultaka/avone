@@ -3,10 +3,10 @@
 @section('adminlogin')
     <div class="login-box">
         <div class="login-logo">
-            <p>Logo</p>
+            <a href="{{route('admin-login')}}"><img src="{{asset('assets/theme/admin/img/logo.png')}}" alt="Logo"></a>
         </div>
         <!-- /.login-logo -->
-        <div class="card">
+        <div class="card card-outline card-primary">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 @if (\Session::has('success'))

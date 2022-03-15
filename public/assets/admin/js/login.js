@@ -25,7 +25,7 @@ $(document).ready(function () {
                     if (data.status != 401 && data.status != 422) {
                         $('#email').val('');
                         $('#password').val('');                
-                          // Store token
+                          // Store user Data
                           var now = new Date();
                           var expire = new Date();
                               expire.setFullYear(now.getFullYear());
@@ -36,14 +36,16 @@ $(document).ready(function () {
                               if(data.user.status == 1){
                                 if(data.user.is_admin == 1){
                                     document.cookie = "access_token="+data.access_token+";expires="+expire.toString()+"";
-                                    document.cookie = "userName="+data.user.name+";expires="+expire.toString()+"";
-                                    document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";
+                                    // document.cookie = "userName="+data.user.name+";expires="+expire.toString()+"";
+                                    // document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";
+                                    document.cookie = "user_id="+data.user._id+";expires="+expire.toString()+"";
                                     document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
                                 }else{
                                     if(data.user.userIP == USER_IP || 1==1){
                                       document.cookie = "access_token="+data.access_token+";expires="+expire.toString()+"";
-                                      document.cookie = "userName="+data.user.name+";expires="+expire.toString()+"";
-                                      document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";
+                                      // document.cookie = "userName="+data.user.name+";expires="+expire.toString()+"";
+                                      // document.cookie = "is_admin="+data.user.is_admin+";expires="+expire.toString()+"";
+                                      document.cookie = "user_id="+data.user._id+";expires="+expire.toString()+"";
                                       document.location.href=""+ BASE_URL + '/' +ADMIN+ "/dashboard";
                                     }else{
                                         errorMsg("You have not authorized to login");  
