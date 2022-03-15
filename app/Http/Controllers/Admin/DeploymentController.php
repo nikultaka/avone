@@ -155,7 +155,7 @@ class DeploymentController extends Controller
                         
                         $action .= "<input type='button' value='Delete' data-toggle='tooltip' title='Delete Deployment' class='btn btn-danger deleteDeployment' data-id='".$row->id."'>&nbsp";     
                         if(userIsSuperAdmin()){
-                            $action .= "<input type='button' value='View' class='btn btn-success data-toggle='tooltip' title='View Deployment Data' viewDeployment' data-id='".$row->id."'>";     
+                            $action .= "<input type='button' value='View' class='viewDeployment btn btn-success data-toggle='tooltip' title='View Deployment Data'  data-id='".$row->id."'>";     
                         }
                         return $action;
                     })
