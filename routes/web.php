@@ -69,6 +69,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('/manage/users/edit','App\Http\Controllers\Admin\ManageUsersController@manageUsersEdit')->name('admin-manage-users-edit');
         Route::post('/manage/users/delete','App\Http\Controllers\Admin\ManageUsersController@manageUsersDelete')->name('admin-manage-users-delete');
 
+        Route::post('/manage/users/importDashboard','App\Http\Controllers\Admin\ManageUsersController@importDashboard')->name('admin-import-user-dashboard');
+
         // Manage users
         Route::get('/whitelist/ip','App\Http\Controllers\Admin\WhitelistIpController@index')->name('admin-whitelist-ip');
         Route::post('/whitelist/ip/save','App\Http\Controllers\Admin\WhitelistIpController@whitelistIpSave')->name('admin-whitelist-ip-save');
@@ -83,6 +85,8 @@ Route::group(['prefix' => 'admin'], function() {
          Route::post('/cms/delete','App\Http\Controllers\Admin\CmsController@deleteCmsData')->name('admin-cms-delete');
          Route::post('/cms/edit','App\Http\Controllers\Admin\CmsController@editCmsData')->name('admin-cms-edit');
          Route::any('/cms/checkslug','App\Http\Controllers\Admin\CmsController@checkSlug')->name('admin-cms-checkslug');
+
+         
     }
 });
 

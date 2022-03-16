@@ -54,15 +54,22 @@
     var ADMIN = 'admin';
     var USER_IP = '<?php echo $getUserIP?>';
     var mode = '<?php echo env('ENVIRONMENT'); ?>';
-        if(mode == 'local'){
-          var API_PREFIX = BASE_URL
-        }
+        // if(mode == 'local'){
+        //   var API_PREFIX = BASE_URL
+        // }
         if(mode == 'live'){
           var API_PREFIX = BASE_URL
+        } else {
+          var API_PREFIX = BASE_URL
         }
+        
+        
 
 </script>
 </head>
+
+
+
 <body class="hold-transition login-page">
     @yield('adminlogin')
 

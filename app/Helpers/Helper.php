@@ -12,7 +12,9 @@ if (!function_exists('curlCall')) {
             $settingData = settingData();
             $EC_API_KEY = isset($settingData['ecapikey']) ? $settingData['ecapikey'] : '';
         }
-
+        if($EC_API_KEY == '' && $EC_API_KEY == null){
+            return '';
+        }
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -261,7 +263,7 @@ if (!function_exists('deploymentListApiCall')) {
         $response = curl_exec($curl);
         curl_close($curl);
         return json_decode($response);*/
-        return $response = curlCall('GET','deployments'); 
+        return curlCall('GET','deployments'); 
     }
 }
 
