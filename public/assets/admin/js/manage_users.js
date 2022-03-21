@@ -111,7 +111,7 @@ function userDataTable() {
             { data: 'is_admin', name: 'is_admin' },
             { data: 'status', name: 'status' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
-            { data: 'import', name: 'import', orderable: false, searchable: false },
+            { data: 'dashboard', name: 'dashboard', orderable: false, searchable: false },
         ]
     });
 }

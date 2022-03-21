@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class UserDashboardImport implements ToModel,WithHeadingRow
 {
     /**
-    * @param array $row
+    * @param array $rowkkkkkkk                                                           
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
@@ -33,16 +33,6 @@ class UserDashboardImport implements ToModel,WithHeadingRow
             // 'published_exploit'         => $row['Published Exploit'],
             // 'recommendation'            => $row['Recommendation'],
             // 'monitor_your_threat'       => $row['Monitor Your Threat']
-            'user_id'                   => '$this->user_id',
-            'networkAssessmentFindings' => 'Network Assessment Findings',
-            'severity'                  => 'Severity',
-            'cve_cwe'                   => 'CVE/CWE',
-            'cvss3'                     => 'CVSS3',
-            'description'               => 'Description',
-            'buisness_impact'           => 'Buisness Impact',
-            'published_exploit'         => 'Published Exploit',
-            'recommendation'            => 'Recommendation',
-            'monitor_your_threat'       => 'Monitor Your Threat'
         ]);
     }
 }

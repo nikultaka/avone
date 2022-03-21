@@ -13,10 +13,11 @@ class CreateUserDashboardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_dashboards', function (Blueprint $table) {
+        Schema::create('users_dashboard', function (Blueprint $table) {
             $table->id();
             $table->bigIncrements('user_id');
-            $table->text('networkAssessmentFindings')->nullable();
+            $table->string('title')->nullable();
+            $table->text('network_assessment_findings')->nullable();
             $table->string('severity')->nullable();
             $table->text('cve_cwe')->nullable();
             $table->string('cvss3')->nullable();
@@ -35,6 +36,6 @@ class CreateUserDashboardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_dashboards');
+        Schema::dropIfExists('users_dashboard');
     }
 }

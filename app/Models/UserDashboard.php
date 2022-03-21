@@ -11,10 +11,10 @@ class UserDashboard extends Model
 {
     use HasFactory;
     protected $connection = 'mongodb';
-    protected $collection = 'user_dashboards';
+    protected $collection = 'users_dashboard';
     public $timestamps = false;
 
     protected $fillable = [
-        '_id','user_id','networkAssessmentFindings','severity','cve_cwe','cvss3','description','buisness_impact','published_exploit','recommendation','monitor_your_threat'
+        '_id','user_id','title','network_assessment_findings','severity','cve_cwe','cvss3','description','buisness_impact','published_exploit','recommendation','monitor_your_threat'
     ];
 }

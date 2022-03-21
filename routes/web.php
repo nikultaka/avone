@@ -69,7 +69,10 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('/manage/users/edit','App\Http\Controllers\Admin\ManageUsersController@manageUsersEdit')->name('admin-manage-users-edit');
         Route::post('/manage/users/delete','App\Http\Controllers\Admin\ManageUsersController@manageUsersDelete')->name('admin-manage-users-delete');
 
-        Route::post('/manage/users/importDashboard','App\Http\Controllers\Admin\ManageUsersController@importDashboard')->name('admin-import-user-dashboard');
+        // Route::post('/manage/users/importDashboard','App\Http\Controllers\Admin\ManageUsersController@importDashboard')->name('admin-import-user-dashboard');
+        Route::get('/userDashboard/{id}','App\Http\Controllers\Admin\UserDashboardController@index')->name('admin-userDashboard');
+        Route::post('/userDashboard/save','App\Http\Controllers\Admin\UserDashboardController@save')->name('admin-userDashboard-save');
+        Route::post('/userDashboard/delete','App\Http\Controllers\Admin\UserDashboardController@delete')->name('admin-userDashboard-delete');
 
         // Manage users
         Route::get('/whitelist/ip','App\Http\Controllers\Admin\WhitelistIpController@index')->name('admin-whitelist-ip');

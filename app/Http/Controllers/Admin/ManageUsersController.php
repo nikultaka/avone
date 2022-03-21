@@ -136,15 +136,15 @@ class ManageUsersController extends Controller
                     $action .= '<input type="button" value="Edit" class="btn btn-sm btn-primary editUser" data-id="' . $row->_id . '" ">';
                     return $action;
                 })
-                ->addColumn('import', function ($row) {
-                    $userId = $row->_id;
-                    $import = "";
+                ->addColumn('dashboard', function ($row) {
+                    $dashboard = "";
                     if ($row->is_admin != 1) {
-                        $import = view('Admin.manage_user.impoart_dashboard_button', compact('userId'))->render();
+                        $dashboard = '<a href="'.route("admin-userDashboard", ["id" => $row->_id]) . '" class="btn btn-warning text-light">Add</a>';
                     }
-                    return $import;
+                    return $dashboard;
+                    
                 })
-                ->rawColumns(['action', 'import'])
+                ->rawColumns(['action', 'dashboard'])
                 ->make(true);
         }
     }
@@ -183,28 +183,28 @@ class ManageUsersController extends Controller
         exit;
     }
 
-    public function importDashboard(Request $request)
-    {
+    // public function dashboardDashboard(Request $request)
+    // {
         
 
-        $validator = Validator::make(
-            [
-                'file'      => $request->file,
-                'extension' => strtolower($request->file->getClientOriginalExtension()),
-            ],
-            [
-                'file'          => 'required',
-                'extension'     => 'required|in:csv,xlsx',
-            ]
-        );
+    //     $validator = Validator::make(
+    //         [
+    //             'file'      => $request->file,
+    //             'extension' => strtolower($request->file->getClientOriginalExtension()),
+    //         ],
+    //         [
+    //             'file'          => 'required',
+    //             'extension'     => 'required|in:csv,xlsx',
+    //         ]
+    //     );
 
-        if ($validator->fails()) {
-            $allErrors = $validator->errors()->all();
-            return view('Admin.manage_user.manage_user_list')->with(compact('allErrors'));
-        }
+    //     if ($validator->fails()) {
+    //         $allErrors = $validator->errors()->all();
+    //         return view('Admin.manage_user.manage_user_list')->with(compact('allErrors'));
+    //     }
 
-        Excel::import(new UserDashboardImport($request->userId), request()->file('file'));
-        Session::flash('success', 'Products import successfully from csv.');
-        return back();
-    }
+    //     Excel::import(new UserDashboardImport($request->userId), request()->file('file'));
+    //     Session::flash('success', 'Products import successfully from csv.');
+    //     return back();
+    // }
 }
