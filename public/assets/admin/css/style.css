@@ -102,9 +102,12 @@
   }
 
   .project-dashbox {
-    padding: 0px 0px 0px 5px !important ;
-    min-height: 89px;
+    /* padding: 0px 0px 0px 5px !important ; */
+    min-height: 125px;
     margin: 5px;
+    border-radius : 5px;
+    padding : 10px !important;
+    height: auto;
   }
 
   @media screen and (max-width: 980px) {
