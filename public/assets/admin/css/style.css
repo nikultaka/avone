@@ -77,14 +77,14 @@
   }
 
   .message-dashheader {
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     justify-content: space-between;
     width: 100%;
   }
 
   .message-dashcontent {
-    padding-left: 16px;
+    /*padding-left: 16px;*/
     width: 100%;
   }
 
@@ -161,7 +161,7 @@
 
 
   .custom-btn {
-    width: 456px;
+    width: 100%;
     height: auto;
     border-radius: 5px;
     padding: 10px 0px;

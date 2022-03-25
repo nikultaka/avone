@@ -56,6 +56,8 @@ Route::group(['prefix' => 'admin'], function() {
     
     // only user Admin access
 
+    //echo '<pre>'; print_r($_COOKIE); exit;
+
     if(isset($_COOKIE['is_admin']) && $_COOKIE['is_admin'] != '' && $_COOKIE['is_admin'] == 1){
         
         // settings

@@ -24,7 +24,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
         </b>
       </div>
       <div class="messages">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" style="display: unset !important;">
           <?php foreach ($titles as $title) { ?>
             <li class="">
               <div class="message-dashbox">
@@ -32,7 +32,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="message-dashheader">
                     <center>
                       <a href="<?php echo "#mk_" . $title['_id'] ?>" class="navTabsClass custom-btn btn-16 addActive_{{$title['_id']}} " data-id="{{$title['_id']}}" data-toggle="tab">{{$title['title']}}</a>
-                    </center>
+                    </center><br />
                   </div>
                 </div>
               </div>
@@ -79,7 +79,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   </div>
                 </div>
 
-                <div class="project-dashbox-wrapper col-md-3">
+                <div class="project-dashbox-wrapper col-md-2">
                   <div class="project-dashbox" style="background-color: #f4433636">
                     <p class="dashbox-content-header" style="color: #f44336">CVE/CWE</p>
                     <p class="dashbox-content-subheader">
@@ -88,7 +88,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   </div>
                 </div>
 
-                <div class="project-dashbox-wrapper col-md-1">
+                <div class="project-dashbox-wrapper col-md-2">
                   <div class="project-dashbox" style="background-color: #01490447">
                     <p class="dashbox-content-header" style="color: #014904d4">CVSS3</p>
                     <p class="dashbox-content-subheader">
