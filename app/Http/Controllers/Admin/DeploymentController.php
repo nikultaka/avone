@@ -195,15 +195,19 @@ class DeploymentController extends Controller
             }
             $lastStatusChange = 0;
             $oldDeploymentList = $request->session()->get('deploymentList');
-            
-            foreach($oldDeploymentList as $aV){
-                $aTmp1[$aV['id']] = $aV['status'];
+            $aTmp1 = [];
+            $aTmp2 = [];
+            if(!empty($oldDeploymentList)){
+                foreach($oldDeploymentList as $aV){
+                    $aTmp1[$aV['id']] = $aV['status'];
+                }
             }
-            
-            foreach($deploymentWithNewKey as $aV){
-                $aTmp2[$aV['id']] = $aV['status_'.$aV['id']];
+            if(!empty($deploymentWithNewKey)){
+                foreach($deploymentWithNewKey as $aV){
+                    $aTmp2[$aV['id']] = $aV['status_'.$aV['id']];
+                }
             }
-
+ 
             $result=array_keys(array_diff($aTmp1,$aTmp2));      
 
             $lastStatusChange = 0;

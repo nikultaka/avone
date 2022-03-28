@@ -39,13 +39,11 @@
                                 @foreach ($dashboardList as $k => $val)
                                 @php
                                 if(strtolower($val['severity']) == 'high'){
-                                    $headerBGcolor = 'red';
+                                    $headerBGcolor = '#ff0000';
                                 } elseif (strtolower($val['severity']) == 'medium') {
-                                    $headerBGcolor = 'yellow';
+                                    $headerBGcolor = '#ffc000';
                                 } elseif (strtolower($val['severity']) == 'low') {
-                                    $headerBGcolor = '#319cdf';
-                                } else {
-                                    $headerBGcolor = 'burlywood';
+                                    $headerBGcolor = '#5b9bd5';
                                 }
                                 @endphp
     
@@ -64,9 +62,14 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <input readonly type="text" class="form-control row_{{$k+1}}" id="severity_{{$k+1}}" name="severity_{{$k+1}}" value="{{isset($val['severity']) ? $val['severity'] : ''}}" placeholder="Severity">
-                                            </div>
+                                            </div> --}}
+                                            <select class="custom-select row_{{$k+1}}" id="severity_{{$k+1}}" style="width: 95px;" name="severity_{{$k+1}}" disabled="true">
+                                                <option value="high" {{isset($val['severity']) && $val['severity'] == 'high' ? 'selected' : ''}}>High</option>
+                                                <option value="medium" {{isset($val['severity']) && $val['severity'] == 'medium' ? 'selected' : ''}}>Medium</option>
+                                                <option value="low" {{isset($val['severity']) && $val['severity'] == 'low' ? 'selected' : ''}}>Low</option>
+                                              </select>
                                         </td>
                                         <td>
                                              <div class="form-group">
@@ -131,9 +134,11 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control row_0" id="severity_0" name="severity_0" placeholder="Severity">
-                                        </div>
+                                        <select class="custom-select" aria-label="Default select example" id="severity_0" id="severity_0">
+                                            <option value="high">High</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="low">Low</option>
+                                          </select>
                                     </td>
                                     <td>
                                          <div class="form-group">

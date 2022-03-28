@@ -26,12 +26,21 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
       <div class="messages">
         <ul class="nav nav-tabs" style="display: unset !important;">
           <?php foreach ($titles as $title) { ?>
+            @php
+              if(strtolower($title['severity']) == 'high'){
+                  $headerBGcolor = '#ff0000';
+              } elseif (strtolower($title['severity']) == 'medium') {
+                  $headerBGcolor = '#ffc000';
+              } elseif (strtolower($title['severity']) == 'low') {
+                  $headerBGcolor = '#5b9bd5';
+              }
+              @endphp
             <li class="">
               <div class="message-dashbox">
                 <div class="message-dashcontent">
                   <div class="message-dashheader">
                     <center>
-                      <a href="<?php echo "#mk_" . $title['_id'] ?>" class="navTabsClass custom-btn btn-16 addActive_{{$title['_id']}} " data-id="{{$title['_id']}}" data-toggle="tab">{{$title['title']}}</a>
+                      <a href="<?php echo "#mk_" . $title['_id'] ?>" class="navTabsClass custom-btn btn-16 addActive_{{$title['_id']}}" style="background-color: {{$headerBGcolor}}" data-id="{{$title['_id']}}" data-toggle="tab">{{$title['title']}}</a>
                     </center><br />
                   </div>
                 </div>
@@ -47,7 +56,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
           <div class="tab-pane" id="<?php echo "mk_" . $allData['_id'] ?>">
             <div class="projects-section-dashheader">
               <b>
-                <p style="font-size: 25px;">{{$allData['title']}}</p>
+                <p style="font-size: 25px;">{{isset($allData['title']) ? $allData['title'] : ''}}</p>
               </b></br>
             </div>
             <div class="project-dashboxes jsGridView">
@@ -56,7 +65,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #fee4cb">
                     <p class="dashbox-content-header" style="color: #ff942e">Network Assessment Findings</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['network_assessment_findings'] ?>
+                      {{isset($allData['network_assessment_findings']) ? $allData['network_assessment_findings'] : ''}}
                     </p>
                   </div>
                 </div>
@@ -65,7 +74,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #ccccffbd">
                     <p class="dashbox-content-header" style="color: #4f3ff0">Severity</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['severity'] ?>
+                      {{isset($allData['severity']) ? $allData['severity'] : ''}}
                     </p>
                   </div>
                 </div>
@@ -74,7 +83,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #ffd3e2">
                     <p class="dashbox-content-header" style="color: #df3670">Published Exploit</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['published_exploit'] ?>
+                      <a href="{{isset($allData['published_exploit']) ? $allData['published_exploit'] : ''}}" target="_blank">Link</a>
                     </p>
                   </div>
                 </div>
@@ -83,7 +92,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #f4433636">
                     <p class="dashbox-content-header" style="color: #f44336">CVE/CWE</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['cve_cwe'] ?>
+                      {{isset($allData['cve_cwe']) ? $allData['cve_cwe'] : ''}}
                     </p>
                   </div>
                 </div>
@@ -92,7 +101,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #01490447">
                     <p class="dashbox-content-header" style="color: #014904d4">CVSS3</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['cvss3'] ?>
+                      {{isset($allData['cvss3']) ? $allData['cvss3'] : ''}}
                     </p>
                   </div>
                 </div>
@@ -101,7 +110,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #d5deff">
                     <p class="dashbox-content-header" style="color: #4067f9">Buisness Impact</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['buisness_impact'] ?>
+                      {{isset($allData['buisness_impact']) ? $allData['buisness_impact'] : ''}}
                     </p>
                   </div>
                 </div>
@@ -110,7 +119,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #F9E79F">
                     <p class="dashbox-content-header" style="color: #B7950B">Recommendation</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['recommendation'] ?>
+                      {{isset($allData['recommendation']) ? $allData['recommendation'] : ''}}
                     </p>
                   </div>
                 </div>
@@ -119,8 +128,9 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #0abfef63">
                     <p class="dashbox-content-header" style="color: #096c86">Monitor Your Threat</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['monitor_your_threat'] ?>
+                      {{isset($allData['monitor_your_threat']) ? $allData['monitor_your_threat'] : ''}}
                     </p>
+                    <a href="https://cloud.elastic.co/login?redirectTo=%2Fhome" target="_blank">Kibana Link</a>
                   </div>
                 </div>
 
@@ -128,7 +138,7 @@ if ($isSuperadmin != 1 && $isSuperadmin == '') {
                   <div class="project-dashbox" style="background-color: #c8f7dc">
                     <p class="dashbox-content-header" style="color: #34c471">Description</p>
                     <p class="dashbox-content-subheader">
-                      <?php echo $allData['description'] ?>
+                      {{isset($allData['description']) ? $allData['description'] : ''}}
                     </p>
                   </div>
                 </div>

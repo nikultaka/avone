@@ -134,6 +134,7 @@ $(document).on('click', '.editRowData', function () {
     var rowNo = $(this).data('id');
     $('#recordIdHdn').val($(this).data('editid'));
     $('.row_' + rowNo).attr('readonly', false);
+    $('#severity_' + rowNo).attr('disabled', false);
     $('#title_' + rowNo).css('background-color', '');
     $('.editBtn_' + rowNo).hide();
     $('.saveBtn_' + rowNo).show();
@@ -141,64 +142,69 @@ $(document).on('click', '.editRowData', function () {
 
 
 $('#addNewRow').on('click', function () {
-    var lastRow = parseInt($('#lastRow').val())+1
+    var lastRow = parseInt($('#lastRow').val()) + 1
     if (validation($('#lastRow').val()) == 0) {
-    $('.userDashboardTbody').append(`<tr> <td colspan="10">
+        //     <div class="form-group">
+        //     <input type="text" class="form-control row_`+lastRow+`" id="severity_`+lastRow+`" name="severity_`+lastRow+`" placeholder="Severity">
+        // </div>
+        $('.userDashboardTbody').append(`<tr> <td colspan="10">
             <div class="form-group">
-                <input type="text" class="form-control row_`+lastRow+`" id="title_`+lastRow+`" name="title_`+lastRow+`"  placeholder="Title">
+                <input type="text" class="form-control row_`+ lastRow + `" id="title_` + lastRow + `" name="title_` + lastRow + `"  placeholder="Title">
             </div> </td> </tr>
     <tr>
         <td>
             <div class="form-group">
-                <input type="text" class="form-control row_`+lastRow+`" id="networkAssessmentFindings_`+lastRow+`" name="networkAssessmentFindings_`+lastRow+`" placeholder="Network Assessment Findings">
+                <input type="text" class="form-control row_`+ lastRow + `" id="networkAssessmentFindings_` + lastRow + `" name="networkAssessmentFindings_` + lastRow + `" placeholder="Network Assessment Findings">
             </div>
         </td>
         <td>
-            <div class="form-group">
-                <input type="text" class="form-control row_`+lastRow+`" id="severity_`+lastRow+`" name="severity_`+lastRow+`" placeholder="Severity">
+             <select  class="custom-select row_`+ lastRow + `" name="severity_` + lastRow + `" id="severity_` + lastRow + `">
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+             </select>
+        </td>
+        <td>
+             <div class="form-group">
+                <input type="text" class="form-control row_`+ lastRow + `" id="cve_cwe_` + lastRow + `" name="cve_cwe_` + lastRow + `" placeholder="CVE/CWE">
             </div>
         </td>
         <td>
              <div class="form-group">
-                <input type="text" class="form-control row_`+lastRow+`" id="cve_cwe_`+lastRow+`" name="cve_cwe_`+lastRow+`" placeholder="CVE/CWE">
+                <input type="text" class="form-control row_`+ lastRow + `" id="cvss3_` + lastRow + `" name="cvss3_` + lastRow + `" placeholder="CVSS3">
             </div>
         </td>
         <td>
              <div class="form-group">
-                <input type="text" class="form-control row_`+lastRow+`" id="cvss3_`+lastRow+`" name="cvss3_`+lastRow+`" placeholder="CVSS3">
+                <textarea class="form-control row_`+ lastRow + `" id="description_` + lastRow + `" name="description_` + lastRow + `" rows="3"></textarea>
             </div>
         </td>
         <td>
              <div class="form-group">
-                <textarea class="form-control row_`+lastRow+`" id="description_`+lastRow+`" name="description_`+lastRow+`" rows="3"></textarea>
+                <textarea class="form-control row_`+ lastRow + `" id="buisnessImpact_` + lastRow + `" name="buisnessImpact_` + lastRow + `" rows="3"></textarea>
             </div>
         </td>
         <td>
              <div class="form-group">
-                <textarea class="form-control row_`+lastRow+`" id="buisnessImpact_`+lastRow+`" name="buisnessImpact_`+lastRow+`" rows="3"></textarea>
+                <input type="text" class="form-control row_`+ lastRow + `" id="publishedExploit_` + lastRow + `" name="publishedExploit_` + lastRow + `" placeholder="Published Exploit">
             </div>
         </td>
         <td>
              <div class="form-group">
-                <input type="text" class="form-control row_`+lastRow+`" id="publishedExploit_`+lastRow+`" name="publishedExploit_`+lastRow+`" placeholder="Published Exploit">
+                <textarea class="form-control row_`+ lastRow + `" id="recommendation_` + lastRow + `" name="recommendation_` + lastRow + `" rows="3"></textarea>
             </div>
         </td>
         <td>
              <div class="form-group">
-                <textarea class="form-control row_`+lastRow+`" id="recommendation_`+lastRow+`" name="recommendation_`+lastRow+`" rows="3"></textarea>
-            </div>
-        </td>
-        <td>
-             <div class="form-group">
-                <textarea class="form-control row_`+lastRow+`" id="monitorYourThreat_`+lastRow+`" name="monitorYourThreat_`+lastRow+`" rows="3"></textarea>
+                <textarea class="form-control row_`+ lastRow + `" id="monitorYourThreat_` + lastRow + `" name="monitorYourThreat_` + lastRow + `" rows="3"></textarea>
             </div>
         </td>
         <td>
             <div style="display:flex;">
-                <button type="button" class="btn btn-success btn-sm saveRowBtn row_`+lastRow+`" data-id="`+lastRow+`" style="border-radius:50%"><i class="fas fa-save"></i></button>
+                <button type="button" class="btn btn-success btn-sm saveRowBtn row_`+ lastRow + `" data-id="` + lastRow + `" style="border-radius:50%"><i class="fas fa-save"></i></button>
             </div>
        </td>
     </tr>`)
-    $('#lastRow').val(lastRow)
+        $('#lastRow').val(lastRow)
     }
 });

@@ -14,9 +14,9 @@ class DashboardController extends Controller
         userLoggedIn();
         $numberOfUser = DB::table('users')->get()->count();
         $totalRegister = DB::table('users')->where('status',0)->get()->count();
-         $titles = DB::table('users_dashboard')->select('title','_id')->where('user_id',logInUserData()['_id'])->get()->toArray();
+         $titles = DB::table('users_dashboard')->select('title','_id','severity')->where('user_id',logInUserData()['_id'])->get()->toArray();
          $allDashboardData = DB::table('users_dashboard')->where('user_id',logInUserData()['_id'])->get()->toArray();
 
-        return view('Admin/dashboard')->with(compact('numberOfUser','totalRegister','titles','allDashboardData'));
+        return view('Admin.dashboard')->with(compact('numberOfUser','totalRegister','titles','allDashboardData'));
     }
 }
